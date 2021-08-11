@@ -2,7 +2,8 @@
  project handling application
  
  After download or clone application run this command **cd project-manager** and run following commands
- ##Run Frontrnd
+ 
+ ## Run Frontrnd
  
  ```
  cd project-frontend
@@ -12,7 +13,7 @@
  
  ```
  
- ##Run Backend
+ ## Run Backend
  
  ```
  cd project-backend
