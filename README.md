@@ -20,4 +20,5 @@
  npm install
  npm run start:dev
  open your browser to see graphql interface http://localhost:3000/graphql
+ Need not to install database it was connected to my MongoDb atlas account
  ```
