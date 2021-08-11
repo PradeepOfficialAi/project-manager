@@ -37,7 +37,6 @@
           headers: {
             'Content-Type': 'application/json',
             'Content-Length': data.length,
-            // Authorization: 'Apikey ' + process.env.STEPZEN_API_KEY,
             'User-Agent': 'Node',
           },
         }
@@ -55,7 +54,8 @@
     // 
     // 
     // 
-    //     
+    // 
+    
     },{"dotenv":2,"node-fetch":3}],2:[function(require,module,exports){
     (function (process){(function (){
     /* @flow */

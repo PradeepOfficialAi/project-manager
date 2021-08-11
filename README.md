@@ -3,7 +3,18 @@
  
  After download or clone application run this command **cd project-manager** and run following commands
  
- ## Run Frontrnd
+  ## First Run Backend
+ 
+ ```
+ cd project-backend
+ npm install
+ npm run start:dev
+ open your browser to see graphql interface http://localhost:3000/graphql
+ Need not to install database it was connected to my MongoDb atlas account
+ ```
+
+
+ ## Second Run Frontrnd
  
  ```
  cd project-frontend
@@ -13,12 +24,3 @@
  
  ```
  
- ## Run Backend
- 
- ```
- cd project-backend
- npm install
- npm run start:dev
- open your browser to see graphql interface http://localhost:3000/graphql
- Need not to install database it was connected to my MongoDb atlas account
- ```
