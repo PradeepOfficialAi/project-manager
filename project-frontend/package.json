@@ -1,0 +1,17 @@
+{
+  "name": "project-frontend",
+  "version": "1.0.0",
+  "description": "Do something",
+  "main": "main.js",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "ts-jest": "^27.0.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
