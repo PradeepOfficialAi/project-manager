@@ -1,5 +1,3 @@
-// export class ProjectDto {}
-
 import { FilterableField, IDField } from '@nestjs-query/query-graphql';
 import { ObjectType, GraphQLISODateTime, Field, ID } from '@nestjs/graphql';
 

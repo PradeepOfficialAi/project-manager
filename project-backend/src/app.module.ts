@@ -10,10 +10,9 @@ import { TasksModule } from './tasks/task.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/project'),
+    MongooseModule.forRoot('mongodb+srv://pradeep:root@cluster0.p6dye.mongodb.net/project?retryWrites=true&w=majority'),
     GraphQLModule.forRoot({
       autoSchemaFile: join('src/schema.gql'),
-      // set to true to automatically generate schema
       sortSchema: true,
     }),
     EmployeModule,
