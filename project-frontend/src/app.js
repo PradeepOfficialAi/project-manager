@@ -1,27 +1,19 @@
-import { queries } from "./graphql/employe/index.js";
+// window.location.href = './views/dashboard.html';
 
-const fetch = require('node-fetch');
-require('dotenv').config();
-async function getData() {
-  const data = JSON.stringify({
-    query: queries.getEmployes,
-  });
-  console.log(data);
-  const response = await fetch(
-    'http://localhost:3000/graphql',
-    {
-      method: 'post',
-      body: data,
-      headers: {
+export function callApi(data) {
+    fetch('http://localhost:3000/graphql', {
+    method: 'POST', // or 'PUT'
+    headers: {
         'Content-Type': 'application/json',
-        'Content-Length': data.length,
-        'User-Agent': 'Node',
-      },
-    }
-  );
-
-  const json = await response.json();
-  document.getElementById("result").innerHTML = json.data.employes.edges[0].node.employeName
+    },
+    body: data,
+    })
+    .then(response => response.json())
+    .then(data => {
+    console.log('Success:', data);
+    })
+    .catch((error) => {
+    console.error('Error:', error);
+    });
 }
 
-getData();

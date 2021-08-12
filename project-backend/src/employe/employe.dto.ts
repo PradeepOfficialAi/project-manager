@@ -6,11 +6,20 @@ export class EmployeDto {
   @IDField(() => ID)
   id!: number;
 
-  @FilterableField()
+  @FilterableField({nullable: true})
+  employeName!: string;
+
+  @FilterableField({nullable: true})
   employeCode!: string;
 
-  @FilterableField()
-  employeName!: string;
+  @FilterableField({nullable: true})
+  employeEmail!: string;
+
+  @FilterableField({nullable: true})
+  employeDesignation!: string;
+
+  @FilterableField({nullable: true})
+  employeAddress!: string;
 
   @Field(() => GraphQLISODateTime)
   created!: Date;

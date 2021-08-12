@@ -2,24 +2,28 @@
 
 const getEmployes = `
 {
-employes {
-  pageInfo {
-    hasNextPage
-    hasPreviousPage
-    startCursor
-    endCursor
-  }
-  edges {
-    node {
-      id
-      employeCode
-      employeName
-      created
-      updated
+  employes {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
     }
-    cursor
+    edges {
+      node {
+        id
+        employeName
+				employeCode
+        employeEmail
+        employeDesignation
+        employeAddress
+        created
+        updated
+      }
+      cursor
+    }
   }
-}}
+}
 `
 
 // function getEmployes() {

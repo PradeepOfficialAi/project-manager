@@ -3,14 +3,21 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: { createdAt: 'created', updatedAt: 'updated' } })
 export class EmployeEntity extends Document {
+  
   @Prop({ required: true })
+  employeName!: string;
+
+  @Prop()
   employeCode!: string;
 
   @Prop()
-  description?: string;
+  employeEmail!: string;
 
-  @Prop({ required: true })
-  employeName!: string;
+  @Prop()
+  employeDesignation!: string;
+
+  @Prop()
+  employeAddress!: string;
 
   @Prop({ default: Date.now })
   created!: Date;
