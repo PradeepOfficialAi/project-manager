@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 
-let getEmployes = gql`
+const getEmployes = `
 {
 employes {
   pageInfo {

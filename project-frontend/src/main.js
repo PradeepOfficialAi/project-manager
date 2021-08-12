@@ -1,36 +1,13 @@
-// import { queries } from "./graphql/employe/index.js";
-// import queries from "./graphql/employe/query.js";
+import { queries } from "./graphql/employe/index.js";
 
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
     const fetch = require('node-fetch');
     require('dotenv').config();
-    // console.log(queries);
-    // const { queries  } = require('./graphql/employe/index.js')
-    // import * queries from './graphql/employe/index';
-
     async function getData() {
       const data = JSON.stringify({
-        query: `{
-            employes {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-                startCursor
-                endCursor
-              }
-              edges {
-                node {
-                  id
-                  employeCode
-                  employeName
-                  created
-                  updated
-                }
-                cursor
-              }
-            }}`,
+        query: queries.getEmployes,
       });
-    
+      console.log(data);
       const response = await fetch(
         'http://localhost:3000/graphql',
         {
@@ -46,7 +23,6 @@
     
       const json = await response.json();
       document.getElementById("result").innerHTML = json.data.employes.edges[0].node.employeName
-      console.log(json.data);
     }
     
     getData();
