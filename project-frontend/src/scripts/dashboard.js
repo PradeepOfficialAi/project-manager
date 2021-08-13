@@ -10,3 +10,8 @@ document.getElementById("task").onclick = function () {
 document.getElementById("employee").onclick = function () {
   location.href = "../views/employe.html";
 };
+
+function createEmployee() {
+  console.log("Hey Working");
+  
+}

@@ -15,6 +15,7 @@
     rel="stylesheet"
     />
     <link rel="stylesheet" href="../../styles/style.css">
+    <link rel="stylesheet" href="../../styles/employee.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
@@ -27,7 +28,7 @@
           <div class="position-sticky">
               <div class="list-group list-group-flush mx-3 mt-4">
               <a
-                 href="../dashboard.html"
+                 href="./dashboard.html"
                  class="list-group-item list-group-item-action py-2 ripple"
                  aria-current="true"
                  >
@@ -36,18 +37,18 @@
               </a>
         
               <a
-                 href="../crudViews/crudTask.html"
+                 href="./crudViews/crudTask.html"
                  class="list-group-item list-group-item-action py-2 ripple"
                  ><i class="fas fa-scroll fa-fw me-3"></i
                 ><span>Tasks</span></a
                 >
                 <a
-                href="../crudViews/crudProject.html"
+                href="./crudViews/crudProject.html"
                 class="list-group-item list-group-item-action py-2 ripple"
                 ><i class="fas fa-box fa-fw me-3"></i><span>Projects</span></a
                >
                 <a
-                href="../crudViews/crudEmploye.html"
+                href="./crudViews/crudEmploye.html"
                 class="list-group-item list-group-item-action py-2 ripple"
                 ><i class="fas fa-universal-access fa-fw me-3"></i
                ><span>Employee</span></a
@@ -124,7 +125,7 @@
                     </div>
                   <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    <input type="text" class="form-control" id="inputEmail4" placeholder="Email">
                   </div>
                 </div>
                 <div class="form-row">
@@ -143,10 +144,88 @@
                   <label for="inputAddress">Address</label>
                   <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
                 </div>
-                <button type="submit" onclick="createEmployee" class="btn btn-primary">Create Employee</button>
+                <button type="submit" onclick="createEmployee()" class="btn btn-primary">Create Employee</button>
               </form>
+              <hr style="margin-top: 50px;">
+
+              <!-- <div id="employeTable"></div> -->
+              <table id="employeeTableSet"></table>
+              
+
+              <!-- Table for list out value -->
+              <!-- <div class="d-flex justify-content-end mb-4">
+                <div class="form-outline">
+                  <input data-search="" data-target="#table_confirm_delete" type="text" id="search_confirm_delete" class="form-control">
+                  <label class="form-label" for="search_confirm_delete">Search</label>
+                </div>
+                <button class="continue btn btn-primary btn-sm ml-3" data-add-entry="" data-target="#table_confirm_delete">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div> -->
+              <!-- <button id="myBtn">Open Modal</button> -->
+
+              <!-- The Modal -->
+              <div id="employeeModel" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p>Some text in the Modal..</p>
+                </div>
+              
+              </div>
+
+
+
+
+              <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2>Update Employee</h2>
+                    <span class="close">&times;</span>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputPassword4">Employee Name</label>
+                            <input type="text" class="form-control" id="employeeName" placeholder="Name">
+                          </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Email</label>
+                          <input type="text" class="form-control" id="employeeEmail" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputCity">Employee Code</label>
+                          <input type="text" class="form-control" id="employeeCode" placeholder="Code">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCity">Designation</label>
+                            <input type="text" class="form-control" id="employeeDesignation" placeholder="Developer">
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <label for="inputAddress">Address</label>
+                        <input type="text" class="form-control" id="employeeAddress" placeholder="1234 Main St">
+                      </div>
+                      <button type="submit" onclick="updateMongoEmployee()" class="btn btn-primary">Update Employee</button>
+                    </form>
+                    <hr style="margin-top: 50px;">
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+
+              </div>
         </div>
       </main>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="module" src="../../scripts/crudScripts/crudEmploye.js"></script>
 </body>
 </html>

@@ -37,3 +37,31 @@ body {
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   }
+  #employeeTableSet {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+#employeeTableSet td, #employeeTableSet th{
+    border:1px solid #ddd;
+    padding: 8px;
+}
+#employeeTableSet tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#employeeTableSet tr:hover {
+    background-color: #ddd;
+}
+#employeeTableSet th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #6bb5fa;
+    color: white;
+}
+.container {
+    margin-top: 10px;
+}
+#employeTable {
+    margin-top: 10px;
+}

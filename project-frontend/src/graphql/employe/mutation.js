@@ -1,5 +1,5 @@
 
-const employeMutation = `
+const createEmploye = `
 mutation CreateEmployee($input: CreateOneEmployeInput!) {
   createOneEmploye(input:$input) {
     id
@@ -14,6 +14,31 @@ mutation CreateEmployee($input: CreateOneEmployeInput!) {
 }
 `
 
+const updateEmployee = `
+mutation updateEmployee($input:UpdateOneEmployeInput!) {
+  updateOneEmploye(input:$input) {
+    id
+    employeName
+    employeCode
+    employeEmail
+    employeDesignation
+    employeAddress
+    created
+    updated
+  }
+}
+`
+
+const deleteEmployee = `
+mutation deleteEmployee($input : DeleteOneEmployeInput!) {
+  deleteOneEmploye(input: $input) {
+    id
+  }
+}
+`
+
 export {
-    employeMutation
+  createEmploye,
+  updateEmployee,
+  deleteEmployee
 }
