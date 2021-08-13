@@ -1,4 +1,4 @@
-// window.location.href = './views/dashboard.html';
+window.location.href = './views/dashboard.html';
 
 export function callApi(data) {
     fetch('http://localhost:3000/graphql', {
