@@ -18,9 +18,9 @@
  
  ```
  cd project-frontend
- npm install
  install live server in vs code from extension tab
  right click and choose first option **Open With Live Server**
  
  ```
  
+https://www.daterangepicker.com/
