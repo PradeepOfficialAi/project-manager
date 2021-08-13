@@ -68,6 +68,7 @@ function callMeTODisplay() {
       processedArray.push(element.node)
       
   }
+  debugger
   displayTable(processedArray)
 
   // console.log('Success:', data.data.employes.edges);
@@ -115,9 +116,10 @@ window.employeDelete =  function employeDelete(value) {
                   }
               }
           });
-          debugger
-          callApi(data)
-            // callMeTODisplay()
+          callApi(data).then(data => {
+            processedArray = []
+            callMeTODisplay()
+          })
             // displayTable()
           }
             value = undefined
@@ -134,7 +136,7 @@ window.employeUpdate =  function employeUpdate(value) {
   if (table) {
     for (var i = 0; i < table.rows.length; i++) {
       table.rows[i].onclick = function() {
-        if (value) {
+        if (value === 'update') {
           tableText(this);
         }
         value = undefined
