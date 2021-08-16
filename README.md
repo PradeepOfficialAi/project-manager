@@ -24,3 +24,6 @@
  ```
  
 https://www.daterangepicker.com/
+
+Modern  Calander
+https://codepen.io/jpag82/pen/Nazayx

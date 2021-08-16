@@ -1,7 +1,7 @@
-import { TasksEntity } from './task.entity';
+import { TaskEntity } from './task.entity';
 
-describe('TasksEntity', () => {
+describe('TaskEntity', () => {
   it('should be defined', () => {
-    expect(new TasksEntity()).toBeDefined();
+    expect(new TaskEntity()).toBeDefined();
   });
 });

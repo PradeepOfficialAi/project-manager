@@ -5,7 +5,7 @@
 """Cursor for paging through collections"""
 scalar ConnectionCursor
 
-input CreateEmploye {
+input CreateEmployee {
   created: DateTime
   employeAddress: String
   employeCode: String
@@ -16,54 +16,54 @@ input CreateEmploye {
   updated: DateTime
 }
 
-input CreateManyEmployesInput {
+input CreateManyEmployeesInput {
   """Array of records to create"""
-  employes: [CreateEmploye!]!
+  employees: [CreateEmployee!]!
 }
 
 input CreateManyProjectsInput {
   """Array of records to create"""
-  projects: [CreateProjects!]!
+  projects: [CreateProject!]!
 }
 
 input CreateManyTasksInput {
   """Array of records to create"""
-  tasks: [CreateTasks!]!
+  tasks: [CreateTask!]!
 }
 
-input CreateOneEmployeInput {
+input CreateOneEmployeeInput {
   """The record to create"""
-  employe: CreateEmploye!
+  employee: CreateEmployee!
 }
 
-input CreateOneProjectsInput {
+input CreateOneProjectInput {
   """The record to create"""
-  projects: CreateProjects!
+  project: CreateProject!
 }
 
-input CreateOneTasksInput {
+input CreateOneTaskInput {
   """The record to create"""
-  tasks: CreateTasks!
+  task: CreateTask!
 }
 
-input CreateProjects {
+input CreateProject {
   created: DateTime
   endDate: DateTime
   id: ID
-  projectDevelopers: String
-  projectLeader: String
+  projectDevelopers: [String!]
+  projectLeaderId: Int
   projectName: String
   startDate: DateTime
   updated: DateTime
 }
 
-input CreateTasks {
+input CreateTask {
   created: DateTime
-  employeName: String
   endDate: DateTime
   id: ID
-  projectName: String
+  projectNameId: Int
   startDate: DateTime
+  taskDevelopers: [String!]
   taskName: String
   updated: DateTime
 }
@@ -87,14 +87,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-input DeleteManyEmployesInput {
+input DeleteManyEmployeesInput {
   """Filter to find records to delete"""
-  filter: EmployeDeleteFilter!
+  filter: EmployeeDeleteFilter!
 }
 
 input DeleteManyProjectsInput {
   """Filter to find records to delete"""
-  filter: ProjectsDeleteFilter!
+  filter: ProjectDeleteFilter!
 }
 
 type DeleteManyResponse {
@@ -104,36 +104,36 @@ type DeleteManyResponse {
 
 input DeleteManyTasksInput {
   """Filter to find records to delete"""
-  filter: TasksDeleteFilter!
+  filter: TaskDeleteFilter!
 }
 
-input DeleteOneEmployeInput {
+input DeleteOneEmployeeInput {
   """The id of the record to delete."""
   id: ID!
 }
 
-input DeleteOneProjectsInput {
+input DeleteOneProjectInput {
   """The id of the record to delete."""
   id: ID!
 }
 
-input DeleteOneTasksInput {
+input DeleteOneTaskInput {
   """The id of the record to delete."""
   id: ID!
 }
 
-type Employe {
-  created: DateTime!
+type Employee {
+  created: DateTime
   employeAddress: String
   employeCode: String
   employeDesignation: String
   employeEmail: String
   employeName: String
   id: ID!
-  updated: DateTime!
+  updated: DateTime
 }
 
-type EmployeAggregateGroupBy {
+type EmployeeAggregateGroupBy {
   employeAddress: String
   employeCode: String
   employeDesignation: String
@@ -142,19 +142,22 @@ type EmployeAggregateGroupBy {
   id: ID
 }
 
-type EmployeAvgAggregate {
+type EmployeeAvgAggregate {
   id: Float
 }
 
-type EmployeConnection {
+type EmployeeConnection {
   """Array of edges."""
-  edges: [EmployeEdge!]!
+  edges: [EmployeeEdge!]!
 
   """Paging information"""
   pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
 }
 
-type EmployeCountAggregate {
+type EmployeeCountAggregate {
   employeAddress: Int
   employeCode: Int
   employeDesignation: Int
@@ -163,18 +166,18 @@ type EmployeCountAggregate {
   id: Int
 }
 
-input EmployeDeleteFilter {
-  and: [EmployeDeleteFilter!]
+input EmployeeDeleteFilter {
+  and: [EmployeeDeleteFilter!]
   employeAddress: StringFieldComparison
   employeCode: StringFieldComparison
   employeDesignation: StringFieldComparison
   employeEmail: StringFieldComparison
   employeName: StringFieldComparison
   id: IDFilterComparison
-  or: [EmployeDeleteFilter!]
+  or: [EmployeeDeleteFilter!]
 }
 
-type EmployeDeleteResponse {
+type EmployeeDeleteResponse {
   created: DateTime
   employeAddress: String
   employeCode: String
@@ -185,26 +188,26 @@ type EmployeDeleteResponse {
   updated: DateTime
 }
 
-type EmployeEdge {
+type EmployeeEdge {
   """Cursor for this node."""
   cursor: ConnectionCursor!
 
-  """The node containing the Employe"""
-  node: Employe!
+  """The node containing the Employee"""
+  node: Employee!
 }
 
-input EmployeFilter {
-  and: [EmployeFilter!]
+input EmployeeFilter {
+  and: [EmployeeFilter!]
   employeAddress: StringFieldComparison
   employeCode: StringFieldComparison
   employeDesignation: StringFieldComparison
   employeEmail: StringFieldComparison
   employeName: StringFieldComparison
   id: IDFilterComparison
-  or: [EmployeFilter!]
+  or: [EmployeeFilter!]
 }
 
-type EmployeMaxAggregate {
+type EmployeeMaxAggregate {
   employeAddress: String
   employeCode: String
   employeDesignation: String
@@ -213,7 +216,7 @@ type EmployeMaxAggregate {
   id: ID
 }
 
-type EmployeMinAggregate {
+type EmployeeMinAggregate {
   employeAddress: String
   employeCode: String
   employeDesignation: String
@@ -222,13 +225,13 @@ type EmployeMinAggregate {
   id: ID
 }
 
-input EmployeSort {
+input EmployeeSort {
   direction: SortDirection!
-  field: EmployeSortFields!
+  field: EmployeeSortFields!
   nulls: SortNulls
 }
 
-enum EmployeSortFields {
+enum EmployeeSortFields {
   employeAddress
   employeCode
   employeDesignation
@@ -237,19 +240,19 @@ enum EmployeSortFields {
   id
 }
 
-type EmployeSumAggregate {
+type EmployeeSumAggregate {
   id: Float
 }
 
-input EmployeUpdateFilter {
-  and: [EmployeUpdateFilter!]
+input EmployeeUpdateFilter {
+  and: [EmployeeUpdateFilter!]
   employeAddress: StringFieldComparison
   employeCode: StringFieldComparison
   employeDesignation: StringFieldComparison
   employeEmail: StringFieldComparison
   employeName: StringFieldComparison
   id: IDFilterComparison
-  or: [EmployeUpdateFilter!]
+  or: [EmployeeUpdateFilter!]
 }
 
 input IDFilterComparison {
@@ -269,25 +272,49 @@ input IDFilterComparison {
   notLike: ID
 }
 
+input IntFieldComparison {
+  between: IntFieldComparisonBetween
+  eq: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  is: Boolean
+  isNot: Boolean
+  lt: Int
+  lte: Int
+  neq: Int
+  notBetween: IntFieldComparisonBetween
+  notIn: [Int!]
+}
+
+input IntFieldComparisonBetween {
+  lower: Int!
+  upper: Int!
+}
+
 type Mutation {
-  createManyEmployes(input: CreateManyEmployesInput!): [Employe!]!
-  createManyProjects(input: CreateManyProjectsInput!): [Projects!]!
-  createManyTasks(input: CreateManyTasksInput!): [Tasks!]!
-  createOneEmploye(input: CreateOneEmployeInput!): Employe!
-  createOneProjects(input: CreateOneProjectsInput!): Projects!
-  createOneTasks(input: CreateOneTasksInput!): Tasks!
-  deleteManyEmployes(input: DeleteManyEmployesInput!): DeleteManyResponse!
+  createManyEmployees(input: CreateManyEmployeesInput!): [Employee!]!
+  createManyProjects(input: CreateManyProjectsInput!): [Project!]!
+  createManyTasks(input: CreateManyTasksInput!): [Task!]!
+  createOneEmployee(input: CreateOneEmployeeInput!): Employee!
+  createOneProject(input: CreateOneProjectInput!): Project!
+  createOneTask(input: CreateOneTaskInput!): Task!
+  deleteManyEmployees(input: DeleteManyEmployeesInput!): DeleteManyResponse!
   deleteManyProjects(input: DeleteManyProjectsInput!): DeleteManyResponse!
   deleteManyTasks(input: DeleteManyTasksInput!): DeleteManyResponse!
-  deleteOneEmploye(input: DeleteOneEmployeInput!): EmployeDeleteResponse!
-  deleteOneProjects(input: DeleteOneProjectsInput!): ProjectsDeleteResponse!
-  deleteOneTasks(input: DeleteOneTasksInput!): TasksDeleteResponse!
-  updateManyEmployes(input: UpdateManyEmployesInput!): UpdateManyResponse!
+  deleteOneEmployee(input: DeleteOneEmployeeInput!): EmployeeDeleteResponse!
+  deleteOneProject(input: DeleteOneProjectInput!): ProjectDeleteResponse!
+  deleteOneTask(input: DeleteOneTaskInput!): TaskDeleteResponse!
+  removeProjectLeaderFromProject(input: RemoveProjectLeaderFromProjectInput!): Project!
+  removeProjectNameFromTask(input: RemoveProjectNameFromTaskInput!): Task!
+  setProjectLeaderOnProject(input: SetProjectLeaderOnProjectInput!): Project!
+  setProjectNameOnTask(input: SetProjectNameOnTaskInput!): Task!
+  updateManyEmployees(input: UpdateManyEmployeesInput!): UpdateManyResponse!
   updateManyProjects(input: UpdateManyProjectsInput!): UpdateManyResponse!
   updateManyTasks(input: UpdateManyTasksInput!): UpdateManyResponse!
-  updateOneEmploye(input: UpdateOneEmployeInput!): Employe!
-  updateOneProjects(input: UpdateOneProjectsInput!): Projects!
-  updateOneTasks(input: UpdateOneTasksInput!): Tasks!
+  updateOneEmployee(input: UpdateOneEmployeeInput!): Employee!
+  updateOneProject(input: UpdateOneProjectInput!): Project!
+  updateOneTask(input: UpdateOneTaskInput!): Task!
 }
 
 type PageInfo {
@@ -304,155 +331,193 @@ type PageInfo {
   startCursor: ConnectionCursor
 }
 
-type Projects {
-  created: DateTime!
-  endDate: DateTime!
-  id: ID!
-  projectDevelopers: String!
-  projectLeader: String!
-  projectName: String!
-  startDate: DateTime!
-  updated: DateTime!
-}
-
-type ProjectsAggregateGroupBy {
-  id: ID
-  projectDevelopers: String
-  projectLeader: String
-  projectName: String
-}
-
-type ProjectsAvgAggregate {
-  id: Float
-}
-
-type ProjectsConnection {
-  """Array of edges."""
-  edges: [ProjectsEdge!]!
-
-  """Paging information"""
-  pageInfo: PageInfo!
-}
-
-type ProjectsCountAggregate {
-  id: Int
-  projectDevelopers: Int
-  projectLeader: Int
-  projectName: Int
-}
-
-input ProjectsDeleteFilter {
-  and: [ProjectsDeleteFilter!]
-  id: IDFilterComparison
-  or: [ProjectsDeleteFilter!]
-  projectDevelopers: StringFieldComparison
-  projectLeader: StringFieldComparison
-  projectName: StringFieldComparison
-}
-
-type ProjectsDeleteResponse {
+type Project {
   created: DateTime
   endDate: DateTime
-  id: ID
-  projectDevelopers: String
-  projectLeader: String
+  id: ID!
+  projectDevelopers: [String!]
+  projectLeader: Employee
+  projectLeaderId: Int
   projectName: String
   startDate: DateTime
   updated: DateTime
 }
 
-type ProjectsEdge {
-  """Cursor for this node."""
-  cursor: ConnectionCursor!
-
-  """The node containing the Projects"""
-  node: Projects!
+type ProjectAggregateGroupBy {
+  id: ID
+  projectLeaderId: Int
+  projectName: String
 }
 
-input ProjectsFilter {
-  and: [ProjectsFilter!]
+type ProjectAvgAggregate {
+  id: Float
+  projectLeaderId: Float
+}
+
+type ProjectConnection {
+  """Array of edges."""
+  edges: [ProjectEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type ProjectCountAggregate {
+  id: Int
+  projectLeaderId: Int
+  projectName: Int
+}
+
+input ProjectDeleteFilter {
+  and: [ProjectDeleteFilter!]
   id: IDFilterComparison
-  or: [ProjectsFilter!]
-  projectDevelopers: StringFieldComparison
-  projectLeader: StringFieldComparison
+  or: [ProjectDeleteFilter!]
+  projectLeaderId: IntFieldComparison
   projectName: StringFieldComparison
 }
 
-type ProjectsMaxAggregate {
+type ProjectDeleteResponse {
+  created: DateTime
+  endDate: DateTime
   id: ID
-  projectDevelopers: String
-  projectLeader: String
+  projectDevelopers: [String!]
+  projectLeaderId: Int
+  projectName: String
+  startDate: DateTime
+  updated: DateTime
+}
+
+type ProjectEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Project"""
+  node: Project!
+}
+
+input ProjectFilter {
+  and: [ProjectFilter!]
+  id: IDFilterComparison
+  or: [ProjectFilter!]
+  projectLeaderId: IntFieldComparison
+  projectName: StringFieldComparison
+}
+
+type ProjectMaxAggregate {
+  id: ID
+  projectLeaderId: Int
   projectName: String
 }
 
-type ProjectsMinAggregate {
+type ProjectMinAggregate {
   id: ID
-  projectDevelopers: String
-  projectLeader: String
+  projectLeaderId: Int
   projectName: String
 }
 
-input ProjectsSort {
+input ProjectSort {
   direction: SortDirection!
-  field: ProjectsSortFields!
+  field: ProjectSortFields!
   nulls: SortNulls
 }
 
-enum ProjectsSortFields {
+enum ProjectSortFields {
   id
-  projectDevelopers
-  projectLeader
+  projectLeaderId
   projectName
 }
 
-type ProjectsSumAggregate {
+type ProjectSumAggregate {
   id: Float
+  projectLeaderId: Float
 }
 
-input ProjectsUpdateFilter {
-  and: [ProjectsUpdateFilter!]
+input ProjectUpdateFilter {
+  and: [ProjectUpdateFilter!]
   id: IDFilterComparison
-  or: [ProjectsUpdateFilter!]
-  projectDevelopers: StringFieldComparison
-  projectLeader: StringFieldComparison
+  or: [ProjectUpdateFilter!]
+  projectLeaderId: IntFieldComparison
   projectName: StringFieldComparison
 }
 
 type Query {
-  employe(
+  employee(
     """The id of the record to find."""
     id: ID!
-  ): Employe
-  employes(
+  ): Employee
+  employees(
     """Specify to filter the records returned."""
-    filter: EmployeFilter = {}
+    filter: EmployeeFilter = {}
 
     """Limit or page results."""
     paging: CursorPaging = {first: 10}
 
     """Specify to sort results."""
-    sorting: [EmployeSort!] = []
-  ): EmployeConnection!
+    sorting: [EmployeeSort!] = []
+  ): EmployeeConnection!
+  project(
+    """The id of the record to find."""
+    id: ID!
+  ): Project
   projects(
     """Specify to filter the records returned."""
-    filter: ProjectsFilter = {}
+    filter: ProjectFilter = {}
 
     """Limit or page results."""
     paging: CursorPaging = {first: 10}
 
     """Specify to sort results."""
-    sorting: [ProjectsSort!] = []
-  ): ProjectsConnection!
+    sorting: [ProjectSort!] = []
+  ): ProjectConnection!
+  task(
+    """The id of the record to find."""
+    id: ID!
+  ): Task
   tasks(
     """Specify to filter the records returned."""
-    filter: TasksFilter = {}
+    filter: TaskFilter = {}
 
     """Limit or page results."""
     paging: CursorPaging = {first: 10}
 
     """Specify to sort results."""
-    sorting: [TasksSort!] = []
-  ): TasksConnection!
+    sorting: [TaskSort!] = []
+  ): TaskConnection!
+}
+
+input RemoveProjectLeaderFromProjectInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input RemoveProjectNameFromTaskInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetProjectLeaderOnProjectInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetProjectNameOnTaskInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
 }
 
 """Sort Directions"""
@@ -484,121 +549,119 @@ input StringFieldComparison {
   notLike: String
 }
 
-type Tasks {
-  created: DateTime!
-  employeName: String!
-  endDate: DateTime!
-  id: ID!
-  projectName: String!
-  startDate: DateTime!
-  taskName: String!
-  updated: DateTime!
-}
-
-type TasksAggregateGroupBy {
-  employeName: String
-  id: ID
-  projectName: String
-  taskName: String
-}
-
-type TasksAvgAggregate {
-  id: Float
-}
-
-type TasksConnection {
-  """Array of edges."""
-  edges: [TasksEdge!]!
-
-  """Paging information"""
-  pageInfo: PageInfo!
-}
-
-type TasksCountAggregate {
-  employeName: Int
-  id: Int
-  projectName: Int
-  taskName: Int
-}
-
-input TasksDeleteFilter {
-  and: [TasksDeleteFilter!]
-  employeName: StringFieldComparison
-  id: IDFilterComparison
-  or: [TasksDeleteFilter!]
-  projectName: StringFieldComparison
-  taskName: StringFieldComparison
-}
-
-type TasksDeleteResponse {
+type Task {
   created: DateTime
-  employeName: String
   endDate: DateTime
-  id: ID
-  projectName: String
+  id: ID!
+  projectName: Project
+  projectNameId: Int
   startDate: DateTime
+  taskDevelopers: [String!]
   taskName: String
   updated: DateTime
 }
 
-type TasksEdge {
+type TaskAggregateGroupBy {
+  id: ID
+  projectNameId: Int
+  taskName: String
+}
+
+type TaskAvgAggregate {
+  id: Float
+  projectNameId: Float
+}
+
+type TaskConnection {
+  """Array of edges."""
+  edges: [TaskEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type TaskCountAggregate {
+  id: Int
+  projectNameId: Int
+  taskName: Int
+}
+
+input TaskDeleteFilter {
+  and: [TaskDeleteFilter!]
+  id: IDFilterComparison
+  or: [TaskDeleteFilter!]
+  projectNameId: IntFieldComparison
+  taskName: StringFieldComparison
+}
+
+type TaskDeleteResponse {
+  created: DateTime
+  endDate: DateTime
+  id: ID
+  projectNameId: Int
+  startDate: DateTime
+  taskDevelopers: [String!]
+  taskName: String
+  updated: DateTime
+}
+
+type TaskEdge {
   """Cursor for this node."""
   cursor: ConnectionCursor!
 
-  """The node containing the Tasks"""
-  node: Tasks!
+  """The node containing the Task"""
+  node: Task!
 }
 
-input TasksFilter {
-  and: [TasksFilter!]
-  employeName: StringFieldComparison
+input TaskFilter {
+  and: [TaskFilter!]
   id: IDFilterComparison
-  or: [TasksFilter!]
-  projectName: StringFieldComparison
+  or: [TaskFilter!]
+  projectNameId: IntFieldComparison
   taskName: StringFieldComparison
 }
 
-type TasksMaxAggregate {
-  employeName: String
+type TaskMaxAggregate {
   id: ID
-  projectName: String
+  projectNameId: Int
   taskName: String
 }
 
-type TasksMinAggregate {
-  employeName: String
+type TaskMinAggregate {
   id: ID
-  projectName: String
+  projectNameId: Int
   taskName: String
 }
 
-input TasksSort {
+input TaskSort {
   direction: SortDirection!
-  field: TasksSortFields!
+  field: TaskSortFields!
   nulls: SortNulls
 }
 
-enum TasksSortFields {
-  employeName
+enum TaskSortFields {
   id
-  projectName
+  projectNameId
   taskName
 }
 
-type TasksSumAggregate {
+type TaskSumAggregate {
   id: Float
+  projectNameId: Float
 }
 
-input TasksUpdateFilter {
-  and: [TasksUpdateFilter!]
-  employeName: StringFieldComparison
+input TaskUpdateFilter {
+  and: [TaskUpdateFilter!]
   id: IDFilterComparison
-  or: [TasksUpdateFilter!]
-  projectName: StringFieldComparison
+  or: [TaskUpdateFilter!]
+  projectNameId: IntFieldComparison
   taskName: StringFieldComparison
 }
 
-input UpdateEmploye {
+input UpdateEmployee {
   created: DateTime
   employeAddress: String
   employeCode: String
@@ -609,20 +672,20 @@ input UpdateEmploye {
   updated: DateTime
 }
 
-input UpdateManyEmployesInput {
+input UpdateManyEmployeesInput {
   """Filter used to find fields to update"""
-  filter: EmployeUpdateFilter!
+  filter: EmployeeUpdateFilter!
 
   """The update to apply to all records found using the filter"""
-  update: UpdateEmploye!
+  update: UpdateEmployee!
 }
 
 input UpdateManyProjectsInput {
   """Filter used to find fields to update"""
-  filter: ProjectsUpdateFilter!
+  filter: ProjectUpdateFilter!
 
   """The update to apply to all records found using the filter"""
-  update: UpdateProjects!
+  update: UpdateProject!
 }
 
 type UpdateManyResponse {
@@ -632,54 +695,54 @@ type UpdateManyResponse {
 
 input UpdateManyTasksInput {
   """Filter used to find fields to update"""
-  filter: TasksUpdateFilter!
+  filter: TaskUpdateFilter!
 
   """The update to apply to all records found using the filter"""
-  update: UpdateTasks!
+  update: UpdateTask!
 }
 
-input UpdateOneEmployeInput {
+input UpdateOneEmployeeInput {
   """The id of the record to update"""
   id: ID!
 
   """The update to apply."""
-  update: UpdateEmploye!
+  update: UpdateEmployee!
 }
 
-input UpdateOneProjectsInput {
+input UpdateOneProjectInput {
   """The id of the record to update"""
   id: ID!
 
   """The update to apply."""
-  update: UpdateProjects!
+  update: UpdateProject!
 }
 
-input UpdateOneTasksInput {
+input UpdateOneTaskInput {
   """The id of the record to update"""
   id: ID!
 
   """The update to apply."""
-  update: UpdateTasks!
+  update: UpdateTask!
 }
 
-input UpdateProjects {
+input UpdateProject {
   created: DateTime
   endDate: DateTime
   id: ID
-  projectDevelopers: String
-  projectLeader: String
+  projectDevelopers: [String!]
+  projectLeaderId: Int
   projectName: String
   startDate: DateTime
   updated: DateTime
 }
 
-input UpdateTasks {
+input UpdateTask {
   created: DateTime
-  employeName: String
   endDate: DateTime
   id: ID
-  projectName: String
+  projectNameId: Int
   startDate: DateTime
+  taskDevelopers: [String!]
   taskName: String
   updated: DateTime
 }

@@ -1,7 +1,7 @@
 
 const createEmploye = `
-mutation CreateEmployee($input: CreateOneEmployeInput!) {
-  createOneEmploye(input:$input) {
+mutation CreateEmployee($input: CreateOneEmployeeInput!) {
+  createOneEmployee(input:$input) {
     id
     employeName
     employeCode
@@ -15,8 +15,8 @@ mutation CreateEmployee($input: CreateOneEmployeInput!) {
 `
 
 const updateEmployee = `
-mutation updateEmployee($input:UpdateOneEmployeInput!) {
-  updateOneEmploye(input:$input) {
+mutation updateEmployee($input:UpdateOneEmployeeInput!) {
+  updateOneEmployee(input:$input) {
     id
     employeName
     employeCode
@@ -30,8 +30,8 @@ mutation updateEmployee($input:UpdateOneEmployeInput!) {
 `
 
 const deleteEmployee = `
-mutation deleteEmployee($input : DeleteOneEmployeInput!) {
-  deleteOneEmploye(input: $input) {
+mutation deleteEmployee($input : DeleteOneEmployeeInput!) {
+  deleteOneEmployee(input: $input) {
     id
   }
 }

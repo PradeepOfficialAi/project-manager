@@ -1,19 +1,18 @@
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { NestjsQueryMongooseModule } from '@nestjs-query/query-mongoose';
+import { NestjsQuerySequelizeModule } from '@nestjs-query/query-sequelize';
 import { Module } from '@nestjs/common';
-import { ProjectDto } from './project.dto';
-import { ProjectEntity, ProjectEntitySchema } from './project.entity';
+import { ProjectDTO } from './project.dto';
+import { ProjectEntity } from './project.entity';
 
 @Module({
   imports: [
     NestjsQueryGraphQLModule.forFeature({
-      imports: [
-        NestjsQueryMongooseModule.forFeature([
-          { document: ProjectEntity, name: ProjectEntity.name, schema: ProjectEntitySchema },
-        ]),
-      ],
-      resolvers: [{ DTOClass: ProjectDto, EntityClass: ProjectEntity }],
+      // import the NestjsQuerySequelizeModule to register the entity with sequelize
+      // and provide a QueryService
+      imports: [NestjsQuerySequelizeModule.forFeature([ProjectEntity])],
+      // describe the resolvers you want to expose
+      resolvers: [{ DTOClass: ProjectDTO, EntityClass: ProjectEntity }],
     }),
   ],
 })
-export class ProjectsModule {}
+export class ProjectModule {}

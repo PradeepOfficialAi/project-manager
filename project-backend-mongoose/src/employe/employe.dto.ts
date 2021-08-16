@@ -1,7 +1,11 @@
-import { FilterableField, IDField } from '@nestjs-query/query-graphql';
+import { FilterableField, IDField, KeySet, Relation } from '@nestjs-query/query-graphql';
 import { ObjectType, GraphQLISODateTime, Field, ID } from '@nestjs/graphql';
+import { ProjectDto } from 'src/projects/project.dto';
 
 @ObjectType('Employe')
+// @KeySet(['id'])
+// disable the remove because a sub task cannot exist without a todoitem
+@Relation('projectLeader', () => ProjectDto, { disableRemove: true })
 export class EmployeDto {
   @IDField(() => ID)
   id!: number;

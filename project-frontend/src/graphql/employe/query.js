@@ -1,14 +1,15 @@
 // import gql from 'graphql-tag';
 
 const getEmployes = `
-{
-  employes {
+query Employees{
+  employees {
     pageInfo {
       hasNextPage
       hasPreviousPage
       startCursor
       endCursor
     }
+    totalCount
     edges {
       node {
         id

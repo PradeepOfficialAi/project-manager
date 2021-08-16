@@ -1,29 +1,19 @@
 import { queries, mutations } from "../../graphql/employe/index.js";
 import { callApi } from "../commonApi.js";
+import { commonHeader } from "../commonHeader.js"
 
+document.getElementById('commonHeader').innerHTML = commonHeader
 let processData;
 let updateId = [];
 var pushId = '';
 let processedArray = [];
 var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("employeUpdate");
-
-// Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-// btn.onclick = function() {
-//   modal.style.display = "block";
-// }
-
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
@@ -35,7 +25,7 @@ window.createEmployee = function showImportedMessage() {
         query: mutations.createEmploye,
         variables: {
             input: {
-                employe: {
+                employee: {
                     employeName: document.forms[0][0].value,
                     employeEmail: document.forms[0][1].value,
                     employeCode: document.forms[0][2].value,
@@ -54,29 +44,19 @@ function callMeTODisplay() {
   });
   callApi(data).then(response => response.json())
   .then(data => {
-  processData = data.data.employes.edges
-
+  processData = data.data.employees.edges
   for (let index = 0; index < processData.length; index++) {
       const element = processData[index];
-      // let id = index +1
     updateId.push({id: index +1,upId :element.node.id})
-      element.node.id = index +1
       delete element.node.created
       delete element.node.updated
-      console.log(element.node);
-
       processedArray.push(element.node)
-      
   }
-  debugger
   displayTable(processedArray)
-
-  // console.log('Success:', data.data.employes.edges);
   })
   .catch((error) => {
   console.error('Error:', error);
   });
-
 }
 
 function displayTable(mytable) {
@@ -85,7 +65,6 @@ function displayTable(mytable) {
         html += "<tr>";
         for (var k in entry){
                 html += "<td>" + entry[k] + "</td>";
-                
         }
         html+= "<td>" + `
         <a style="color: #3b5998;width:5px;margin-left:10px"
@@ -97,7 +76,6 @@ function displayTable(mytable) {
               ` + "</td>";
         html += `</tr>`;
     });
-    // html += "</table>";
     document.getElementById('employeeTableSet').innerHTML = html
 }
 
@@ -120,18 +98,15 @@ window.employeDelete =  function employeDelete(value) {
             processedArray = []
             callMeTODisplay()
           })
-            // displayTable()
           }
             value = undefined
         };
     }
   }
-
 }
 
 window.employeUpdate =  function employeUpdate(value) {
   modal.style.display = "block";
-
   var table = document.getElementById("employeeTableSet");
   if (table) {
     for (var i = 0; i < table.rows.length; i++) {
@@ -140,7 +115,6 @@ window.employeUpdate =  function employeUpdate(value) {
           tableText(this);
         }
         value = undefined
-
       };
     }
   }
@@ -188,7 +162,6 @@ function tableText(tableRow) {
     for (let index = 0; index < updateId.length; index++) {
           if (parseInt(id) === updateId[index].id) {
           pushId = updateId[index].upId
-          console.log(updateId[index].upId);
       }
       
     }

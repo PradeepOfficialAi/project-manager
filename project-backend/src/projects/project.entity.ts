@@ -1,28 +1,47 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
-@Schema({ timestamps: { createdAt: 'created', updatedAt: 'updated' } })
-export class ProjectEntity extends Document {
-  @Prop({ required: true })
-  projectName!: string;
-
-  @Prop()
-  projectLeader?: string;
-
-  @Prop({ required: true })
-  projectDevelopers!: string;
-
-  @Prop({ default: Date.now })
-  startDate!: Date;
-
-  @Prop({ default: Date.now })
-  endDate!: Date;
+import {
+    Table,
+    Column,
+    Model,
+    CreatedAt,
+    UpdatedAt,
+    PrimaryKey,
+    AutoIncrement,
+    ForeignKey,
+    BelongsTo,
+    DataType,
+  } from 'sequelize-typescript';
+import { EmployeeEntity } from 'src/employees/employee.entity';
   
-  @Prop({ default: Date.now })
-  created!: Date;
+  @Table
+  export class ProjectEntity extends Model<ProjectEntity, Partial<ProjectEntity>> {
+    @PrimaryKey
+    @AutoIncrement
+    @Column
+    id!: number;
 
-  @Prop({ default: Date.now })
-  updated!: Date;
-}
+    @Column
+    projectName!: string;
+  
+    @Column
+    @ForeignKey(() => EmployeeEntity)
+    projectLeaderId:number;
 
-export const ProjectEntitySchema = SchemaFactory.createForClass(ProjectEntity);
+    @BelongsTo(() => EmployeeEntity, 'projectLeaderId')
+    projectLeader: EmployeeEntity
+  
+    @Column({ type: DataType.ARRAY(DataType.STRING) })
+    projectDevelopers!: string[];
+  
+    @Column
+    startDate!: Date;
+  
+    @Column
+    endDate!: Date;
+    
+    @CreatedAt
+    created!: Date;
+  
+    @UpdatedAt
+    updated!: Date;
+  }
+  
