@@ -20,5 +20,21 @@ query {
   }
   
 `
+const getFilterProjects = `
+query projects($filter: ProjectFilter!) {
+  projects(filter: $filter) {
+    edges {
+      node {
+        projectName
+        projectDevelopers
+      }
+    }
+  }
+}
 
-export { getProjects }
+`
+
+export { 
+  getProjects,
+  getFilterProjects
+ }

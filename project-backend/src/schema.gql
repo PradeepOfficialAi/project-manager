@@ -5,6 +5,14 @@
 """Cursor for paging through collections"""
 scalar ConnectionCursor
 
+input CreateDashboard {
+  created: DateTime
+  dashboardArray: JSON
+  dashboardId: String
+  id: ID
+  updated: DateTime
+}
+
 input CreateEmployee {
   created: DateTime
   employeAddress: String
@@ -14,6 +22,11 @@ input CreateEmployee {
   employeName: String
   id: ID
   updated: DateTime
+}
+
+input CreateManyDashboardsInput {
+  """Array of records to create"""
+  dashboards: [CreateDashboard!]!
 }
 
 input CreateManyEmployeesInput {
@@ -29,6 +42,11 @@ input CreateManyProjectsInput {
 input CreateManyTasksInput {
   """Array of records to create"""
   tasks: [CreateTask!]!
+}
+
+input CreateOneDashboardInput {
+  """The record to create"""
+  dashboard: CreateDashboard!
 }
 
 input CreateOneEmployeeInput {
@@ -82,10 +100,107 @@ input CursorPaging {
   last: Int
 }
 
+type Dashboard {
+  created: DateTime!
+  dashboardArray: JSON
+  dashboardId: String!
+  id: ID!
+  updated: DateTime!
+}
+
+type DashboardAggregateGroupBy {
+  dashboardId: String
+  id: ID
+}
+
+type DashboardAvgAggregate {
+  id: Float
+}
+
+type DashboardConnection {
+  """Array of edges."""
+  edges: [DashboardEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type DashboardCountAggregate {
+  dashboardId: Int
+  id: Int
+}
+
+input DashboardDeleteFilter {
+  and: [DashboardDeleteFilter!]
+  dashboardId: StringFieldComparison
+  id: IDFilterComparison
+  or: [DashboardDeleteFilter!]
+}
+
+type DashboardDeleteResponse {
+  created: DateTime
+  dashboardArray: JSON
+  dashboardId: String
+  id: ID
+  updated: DateTime
+}
+
+type DashboardEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Dashboard"""
+  node: Dashboard!
+}
+
+input DashboardFilter {
+  and: [DashboardFilter!]
+  dashboardId: StringFieldComparison
+  id: IDFilterComparison
+  or: [DashboardFilter!]
+}
+
+type DashboardMaxAggregate {
+  dashboardId: String
+  id: ID
+}
+
+type DashboardMinAggregate {
+  dashboardId: String
+  id: ID
+}
+
+input DashboardSort {
+  direction: SortDirection!
+  field: DashboardSortFields!
+  nulls: SortNulls
+}
+
+enum DashboardSortFields {
+  dashboardId
+  id
+}
+
+type DashboardSumAggregate {
+  id: Float
+}
+
+input DashboardUpdateFilter {
+  and: [DashboardUpdateFilter!]
+  dashboardId: StringFieldComparison
+  id: IDFilterComparison
+  or: [DashboardUpdateFilter!]
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+input DeleteManyDashboardsInput {
+  """Filter to find records to delete"""
+  filter: DashboardDeleteFilter!
+}
 
 input DeleteManyEmployeesInput {
   """Filter to find records to delete"""
@@ -105,6 +220,11 @@ type DeleteManyResponse {
 input DeleteManyTasksInput {
   """Filter to find records to delete"""
   filter: TaskDeleteFilter!
+}
+
+input DeleteOneDashboardInput {
+  """The id of the record to delete."""
+  id: ID!
 }
 
 input DeleteOneEmployeeInput {
@@ -292,16 +412,25 @@ input IntFieldComparisonBetween {
   upper: Int!
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
 type Mutation {
+  createManyDashboards(input: CreateManyDashboardsInput!): [Dashboard!]!
   createManyEmployees(input: CreateManyEmployeesInput!): [Employee!]!
   createManyProjects(input: CreateManyProjectsInput!): [Project!]!
   createManyTasks(input: CreateManyTasksInput!): [Task!]!
+  createOneDashboard(input: CreateOneDashboardInput!): Dashboard!
   createOneEmployee(input: CreateOneEmployeeInput!): Employee!
   createOneProject(input: CreateOneProjectInput!): Project!
   createOneTask(input: CreateOneTaskInput!): Task!
+  deleteManyDashboards(input: DeleteManyDashboardsInput!): DeleteManyResponse!
   deleteManyEmployees(input: DeleteManyEmployeesInput!): DeleteManyResponse!
   deleteManyProjects(input: DeleteManyProjectsInput!): DeleteManyResponse!
   deleteManyTasks(input: DeleteManyTasksInput!): DeleteManyResponse!
+  deleteOneDashboard(input: DeleteOneDashboardInput!): DashboardDeleteResponse!
   deleteOneEmployee(input: DeleteOneEmployeeInput!): EmployeeDeleteResponse!
   deleteOneProject(input: DeleteOneProjectInput!): ProjectDeleteResponse!
   deleteOneTask(input: DeleteOneTaskInput!): TaskDeleteResponse!
@@ -309,9 +438,11 @@ type Mutation {
   removeProjectNameFromTask(input: RemoveProjectNameFromTaskInput!): Task!
   setProjectLeaderOnProject(input: SetProjectLeaderOnProjectInput!): Project!
   setProjectNameOnTask(input: SetProjectNameOnTaskInput!): Task!
+  updateManyDashboards(input: UpdateManyDashboardsInput!): UpdateManyResponse!
   updateManyEmployees(input: UpdateManyEmployeesInput!): UpdateManyResponse!
   updateManyProjects(input: UpdateManyProjectsInput!): UpdateManyResponse!
   updateManyTasks(input: UpdateManyTasksInput!): UpdateManyResponse!
+  updateOneDashboard(input: UpdateOneDashboardInput!): Dashboard!
   updateOneEmployee(input: UpdateOneEmployeeInput!): Employee!
   updateOneProject(input: UpdateOneProjectInput!): Project!
   updateOneTask(input: UpdateOneTaskInput!): Task!
@@ -444,6 +575,20 @@ input ProjectUpdateFilter {
 }
 
 type Query {
+  dashboard(
+    """The id of the record to find."""
+    id: ID!
+  ): Dashboard
+  dashboards(
+    """Specify to filter the records returned."""
+    filter: DashboardFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [DashboardSort!] = []
+  ): DashboardConnection!
   employee(
     """The id of the record to find."""
     id: ID!
@@ -661,6 +806,14 @@ input TaskUpdateFilter {
   taskName: StringFieldComparison
 }
 
+input UpdateDashboard {
+  created: DateTime
+  dashboardArray: JSON
+  dashboardId: String
+  id: ID
+  updated: DateTime
+}
+
 input UpdateEmployee {
   created: DateTime
   employeAddress: String
@@ -670,6 +823,14 @@ input UpdateEmployee {
   employeName: String
   id: ID
   updated: DateTime
+}
+
+input UpdateManyDashboardsInput {
+  """Filter used to find fields to update"""
+  filter: DashboardUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateDashboard!
 }
 
 input UpdateManyEmployeesInput {
@@ -699,6 +860,14 @@ input UpdateManyTasksInput {
 
   """The update to apply to all records found using the filter"""
   update: UpdateTask!
+}
+
+input UpdateOneDashboardInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateDashboard!
 }
 
 input UpdateOneEmployeeInput {

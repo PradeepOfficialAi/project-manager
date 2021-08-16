@@ -1,7 +1,7 @@
 import { commonHeader } from "../commonHeader.js"
 import { projectQueries, projectMutations } from "../../graphql/projects/index.js";
 import { callApi } from "../commonApi.js";
-import { queries, mutations } from "../../graphql/employe/index.js";
+import { queries } from "../../graphql/employe/index.js";
   
 let html;
 let processData;
@@ -191,7 +191,8 @@ window.createProject = function createProject() {
   let developers = document.getElementsByName('inptProduct')[0].childNodes
   let element = []
   for (let index = 0; index < developers.length; index++) {
-     element.push(developers[index].value)
+    debugger
+     element.push(developers[index].textContent)
   }
 
 let date = (document.forms[0][1].value).split(" - ")

@@ -1,4 +1,4 @@
-// import { commonHeader } from "../commonHeader.js"
+import { mainHeader } from "../scripts/mainHeader.js"
 import { projectQueries } from "../graphql/projects/index.js";
 import { callApi } from "./commonApi.js";
 import { taskQueries } from "../graphql/tasks/index.js";
@@ -38,10 +38,9 @@ function showDashBoardCount() {
   
 // callMeTODisplayProject()
 // callMeTODisplayEmployee()
-  debugger
   document.getElementById("projectDashboard").innerHTML = `
 <div id="projectDashboard" class="row">
-          <div class="col-xl-6 col-md-12 mb-4">
+          <div id="listProject" onclick="listProjectDashboard()" class="col-xl-6 col-md-12 mb-4">
             <div id="project" class="card">
               <div class="card-body">
                 <div class="d-flex justify-content-between p-md-1">
@@ -85,5 +84,11 @@ function showDashBoardCount() {
           </div>
         </div>
 `
+
+document.getElementById('mainHeader').innerHTML = mainHeader
 }
 
+window.listProjectDashboard = function listProjectDashboard() {
+  window.location.href = `./project.html`;
+
+}

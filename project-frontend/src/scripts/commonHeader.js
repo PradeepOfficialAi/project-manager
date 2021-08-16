@@ -17,13 +17,6 @@ return `    <header>
           <i class="fas fa-tachometer-alt fa-fw me-3"></i
             ><span>Dashboard</span>
         </a>
-  
-        <a
-           href="./crudTask.html"
-           class="list-group-item list-group-item-action py-2 ripple"
-           ><i class="fas fa-scroll fa-fw me-3"></i
-          ><span>Tasks</span></a
-          >
           <a
           href="./crudProject.html"
           class="list-group-item list-group-item-action py-2 ripple"

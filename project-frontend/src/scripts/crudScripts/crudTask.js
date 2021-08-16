@@ -247,7 +247,6 @@ window.createTask = function createTask() {
 let date = (document.forms[0][1].value).split(" - ")
 let startDate = date[0]
 let endDate = date[1]
-  console.log(date);
 
   const data = JSON.stringify({
       query: taskMutations.createTask,

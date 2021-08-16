@@ -44,7 +44,7 @@
                 ><span>Tasks</span></a
                 >
                 <a
-                href="./crudViews/crud/Project.html"
+                href="./crudViews/crudProject.html"
                 class="list-group-item list-group-item-action py-2 ripple"
                 ><i class="fas fa-box fa-fw me-3"></i><span>Projects</span></a
                >
@@ -118,45 +118,13 @@
     <!-- Common Closed Header -->
     <main style="margin-top: 58px">
       <div class="container pt-4">
-    <section>
-        <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="fas fa-pencil-alt text-info fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>278</h3>
-                        <p class="mb-0">New Posts</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between px-md-1">
-                      <div class="align-self-center">
-                        <i class="fas fa-box text-info fa-3x"></i>
-                      </div>
-                      <div class="text-end">
-                        <h3>500</h3>
-                        <p class="mb-0">New Boxes</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </div>
-    </section>
+      <div class="row" id="projectCards"></div>
     </div>
     </main>
     <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
     ></script>
+    <script type="module" src="../scripts/project.js"></script>
 </body>
 </html>
