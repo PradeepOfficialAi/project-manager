@@ -20,22 +20,31 @@ window.onclick = function(event) {
   }
 }
 
+window.createEmployeeShow = function createEmployeeShow(){
+  document.getElementById("createEmployeeView").style.display = "block";
+  document.getElementById("createEmployeeButton").style.display = "none";
+}
+
 window.createEmployee = function showImportedMessage() {
-    const data = JSON.stringify({
-        query: mutations.createEmploye,
-        variables: {
-            input: {
-                employee: {
-                    employeName: document.forms[0][0].value,
-                    employeEmail: document.forms[0][1].value,
-                    employeCode: document.forms[0][2].value,
-                    employeDesignation: document.forms[0][3].value,
-                    employeAddress: document.forms[0][4].value,
-                }
-            }
+
+  const data = JSON.stringify({
+    query: mutations.createEmploye,
+    variables: {
+      input: {
+        employee: {
+          employeName: document.forms[0][0].value,
+          employeEmail: document.forms[0][1].value,
+          employeCode: document.forms[0][2].value,
+          employeDesignation: document.forms[0][3].value,
+          employeAddress: document.forms[0][4].value,
         }
-    });
-    callApi(data)
+      }
+    }
+  });
+  document.getElementById("createEmployeeView").style.display = "none";
+  document.getElementById("employeeButton").style.display = "none";
+  document.getElementById("createEmployeeButton").style.display = "block";
+  callApi(data)
 }
 
 function callMeTODisplay() {
@@ -44,15 +53,15 @@ function callMeTODisplay() {
   });
   callApi(data).then(response => response.json())
   .then(data => {
-  processData = data.data.employees.edges
-  for (let index = 0; index < processData.length; index++) {
+    processData = data.data.employees.edges
+    for (let index = 0; index < processData.length; index++) {
       const element = processData[index];
-    updateId.push({id: index +1,upId :element.node.id})
+      updateId.push({id: index +1,upId :element.node.id})
       delete element.node.created
       delete element.node.updated
       processedArray.push(element.node)
-  }
-  displayTable(processedArray)
+    }
+    displayTable(processedArray)
   })
   .catch((error) => {
   console.error('Error:', error);
@@ -60,47 +69,47 @@ function callMeTODisplay() {
 }
 
 function displayTable(mytable) {
-    var html = "<th>id</th><th>Name</th><th>Code</th><th>Email</th> <th>Designation</th> <th>Address</th><th>Actions</th>";
-    mytable.forEach((entry) => {
-        html += "<tr>";
-        for (var k in entry){
-                html += "<td>" + entry[k] + "</td>";
-        }
-        html+= "<td>" + `
-        <a style="color: #3b5998;width:5px;margin-left:10px"
-        ><i id="employeUpdate" onclick="employeUpdate('update')" class="far fa-edit fa-lg"></i
-      ></a>
-        <span style="color: #3b5998;width:5px;margin-left:10px"
-                ><i id="employeDelete" onclick="employeDelete('delete')" class="fas fa-archive fa-lg"></i
-              ></span>
-              ` + "</td>";
-        html += `</tr>`;
-    });
-    document.getElementById('employeeTableSet').innerHTML = html
+  var html = "<th>id</th><th>Name</th><th>Code</th><th>Email</th> <th>Designation</th> <th>Address</th><th>Actions</th>";
+  mytable.forEach((entry) => {
+    html += "<tr>";
+    for (var k in entry){
+      html += "<td>" + entry[k] + "</td>";
+    }
+    html+= "<td>" + `
+    <a style="color: #3b5998;width:5px;margin-left:10px"
+    ><i id="employeUpdate" onclick="employeUpdate('update')" class="far fa-edit fa-lg"></i
+    ></a>
+    <span style="color: #3b5998;width:5px;margin-left:10px"
+    ><i id="employeDelete" onclick="employeDelete('delete')" class="fas fa-archive fa-lg"></i
+    ></span>
+    ` + "</td>";
+    html += `</tr>`;
+  });
+  document.getElementById('employeeTableSet').innerHTML = html
 }
 
 window.employeDelete =  function employeDelete(value) {
   var table = document.getElementById("employeeTableSet");
   if (table) {
     for (var i = 0; i < table.rows.length; i++) {
-        table.rows[i].onclick = function() {  
-          if (value === 'delete') {
-            tableText(this);
-            const data = JSON.stringify({
-              query: mutations.deleteEmployee,
-              variables: {
-                  input: {
-                    id: pushId
-                  }
+      table.rows[i].onclick = function() {  
+        if (value === 'delete') {
+          tableText(this);
+          const data = JSON.stringify({
+            query: mutations.deleteEmployee,
+            variables: {
+              input: {
+                id: pushId
               }
-          });
-          callApi(data).then(data => {
-            processedArray = []
-            callMeTODisplay()
-          })
-          }
-            value = undefined
-        };
+            }
+        });
+        callApi(data).then(data => {
+          processedArray = []
+          callMeTODisplay()
+        })
+        }
+        value = undefined
+      };
     }
   }
 }
@@ -129,94 +138,50 @@ window.updateMongoEmployee = function updateMongoEmployee() {
   const data = JSON.stringify({
     query: mutations.updateEmployee,
     variables: {
-        input: {
-          id: pushId,
-          update: {
-                employeName: name,
-                employeEmail: code,
-                employeCode: email,
-                employeDesignation: designation,
-                employeAddress: address,
-            }
+      input: {
+        id: pushId,
+        update: {
+          employeName: name,
+          employeEmail: code,
+          employeCode: email,
+          employeDesignation: designation,
+          employeAddress: address,
         }
+      }
     }
-});
-callApi(data)
+  });
+  callApi(data)
 }
 
 function tableText(tableRow) {
-    var id = tableRow.childNodes[0].innerHTML;
-    var name = tableRow.childNodes[1].innerHTML;
-    var code = tableRow.childNodes[2].innerHTML;
-    var email = tableRow.childNodes[3].innerHTML;
-    var designation = tableRow.childNodes[4].innerHTML;
-    var address = tableRow.childNodes[5].innerHTML;
-    var employeeData = {
-        'id': id, 
-        'employeName': name,
-        'employeCode': code,
-        'employeEmail': email,
-        'employeDesignation': designation,
-        'employeAddress': address
-      };
-    for (let index = 0; index < updateId.length; index++) {
-          if (parseInt(id) === updateId[index].id) {
-          pushId = updateId[index].upId
-      }
-      
+  // var employeeData = {}
+  // var objString = ['id', 'name', 'code', 'email', 'designation', 'address']
+  // objString.forEach((keyString, index) => {
+  //   employeeData[keyString] = tableRow.childNodes[in].innerHTML
+  // })
+  var id = tableRow.childNodes[0].innerHTML;
+  var name = tableRow.childNodes[1].innerHTML;
+  var code = tableRow.childNodes[2].innerHTML;
+  var email = tableRow.childNodes[3].innerHTML;
+  var designation = tableRow.childNodes[4].innerHTML;
+  var address = tableRow.childNodes[5].innerHTML;
+  var employeeData = {
+    'id': id, 
+    'employeName': name,
+    'employeCode': code,
+    'employeEmail': email,
+    'employeDesignation': designation,
+    'employeAddress': address
+  };
+  for (let index = 0; index < updateId.length; index++) {
+    if (parseInt(id) === updateId[index].id) {
+      pushId = updateId[index].upId
     }
-    document.getElementById('employeeName').value = employeeData.employeName
-    document.getElementById('employeeEmail').value = employeeData.employeEmail
-    document.getElementById('employeeCode').value = employeeData.employeCode
-    document.getElementById('employeeDesignation').value = employeeData.employeDesignation
-    document.getElementById('employeeAddress').value = employeeData.employeAddress
   }
-
+  document.getElementById('employeeName').value = employeeData.employeName
+  document.getElementById('employeeEmail').value = employeeData.employeEmail
+  document.getElementById('employeeCode').value = employeeData.employeCode
+  document.getElementById('employeeDesignation').value = employeeData.employeDesignation
+  document.getElementById('employeeAddress').value = employeeData.employeAddress
+  }
   callMeTODisplay()
-
-//###############Mutation Functions############
-
-// var table = document.getElementById("employeeTableSet");
-//     if (table) {
-//       for (var i = 0; i < table.rows.length; i++) {
-//         table.rows[i].onclick = function() {
-//           tableText(this);
-//         };
-//       }
-//     }
-    
-//     function tableText(tableRow) {
-//       var id = tableRow.childNodes[0].innerHTML;
-//       var name = tableRow.childNodes[1].innerHTML;
-//       var code = tableRow.childNodes[2].innerHTML;
-//       var email = tableRow.childNodes[3].innerHTML;
-//       var designation = tableRow.childNodes[4].innerHTML;
-//       var address = tableRow.childNodes[5].innerHTML;
-//       var obj = {
-//           'id': id, 
-//           'employeName': name,
-//           'employeCode': code,
-//           'employeEmail': email,
-//           'employeDesignation': designation,
-//           'employeAddress': address
-//         };
-//       console.log(obj);
-//     }
-
-//##########Mutation graphql###############
-
-// query: mutations.employeMutation,
-//     variables: {
-//         input: {
-//             employe: {
-//                 employeCode: "230B",
-//                 employeName: "Pradeep"
-//               }
-//         }
-//     }
-
-// ##############Get Values from graphql################
-
-//   const data = JSON.stringify({
-//     query: queries.getEmployes
-//   });

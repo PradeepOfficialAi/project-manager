@@ -1,4 +1,3 @@
-// debugger
 export function callApi(data) {
   return fetch('http://localhost:3000/graphql', {
   method: 'POST', // or 'PUT'
