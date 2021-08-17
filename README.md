@@ -3,6 +3,13 @@
  
  After download or clone application run this command **cd project-manager** and run following commands
  
+ ### prerequisites 
+ 
+ nodejs need to install
+ PostgreSql 13 should be install in your machine
+ create database your favorate name
+ alter path or your host configuration in app.module.ts
+ 
   ## First Run Backend
  
  ```
