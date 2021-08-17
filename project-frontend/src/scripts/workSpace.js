@@ -146,30 +146,27 @@ window.displayFunc = function displayFunc(weekDays) {
       currentDay.push(moment(weekDays).add(index, 'days').format("DD-MM-YYYY"))
   }
 
-  var html = "<table id='mockup'><th>Employees</th><th>Sun <br>"+ currentDay[0] +"</th><th>Mon <br>"+ currentDay[1] +"</th><th>Tue <br>"+ currentDay[2] +"</th> <th>Wed <br>"+ currentDay[3] +"</th> <th>Thu <br>"+ currentDay[4] +"</th> <th>Fri <br>"+ currentDay[5] +"</th> <th>Sat <br>"+ currentDay[6] +"</th>";
+  var html = "<table id='mockup'><th>Employees</th><th>Sun <br>"+ currentDay[0] +"</th><th>Mon <br>"+ currentDay[1] +"</th><th>Tue <br>"+ currentDay[2] +"</th> <th>Wed <br>"+ currentDay[3] +"</th> <th>Thu <br>"+ currentDay[4] +"</th> <th>Fri <br>"+ currentDay[5] +"</th> <th>Sat <br>"+ currentDay[6] +"</th><th>Per/Employee <br> total hour </th>";
   for (let index = 0; index < processDataProject.length; index++) {
     html += `<tr><td>`+ processDataProject[index] +`</td>`
     for (let indexCell = 0; indexCell < currentDay.length; indexCell++) {
-        html += `<td id="content`+ index + indexCell +`" contenteditable="true"></td>`
+        html += `<td id="content`+ index + indexCell +`" contenteditable="true">0</td>`
     }
-    html += `</tr>`
+    html += `<td id="`+ processDataProject[index] +`"></td></tr>`
   }
   html += `<tr style="padding: 30px;">
-  <td><h4>Total Hour</h4></td>
-  <td>2</td>
-  <td>3</td>
-  <td>4</td>
-  <td>5</td>
-  <td>6</td>
-  <td>7</td>
-  <td>8</td>
+  <td><h4></h4></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
 </tr>`
   html += "</table>";
   document.getElementById("result").innerHTML = html;
-  // document.getElementById("calculatedResult").innerHTML = `
-  
-  // <>
-  // `
   currentDay = [];
 
   }).then(data => {
@@ -227,6 +224,7 @@ function getListData() {
             document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
           }
         }
+        totalCalculate(assignArray)
       }
     } 
   })
@@ -251,6 +249,7 @@ function createListData(dashId, createStringify) {
 }
 
 function updateListData(id, storeUpdate, updateStringify) {
+  // updateStringify = totalCalculate(updateStringify)
   const data = JSON.stringify({
     query: dashboardMutations.updateDashboard,
     variables: {
@@ -269,6 +268,35 @@ function updateListData(id, storeUpdate, updateStringify) {
       setUpdate = false
     })
   }
+}
+
+function totalCalculate(sheetData) {
+
+  let calValue = 0;
+  let storeArray = []
+  let storeRowArray = []
+  let findedId;
+  let stringArray = sheetData
+  for (let index = 1; index < stringArray.length && index < (stringArray.length - 1); index++) {
+    for (let indexIn = 0; indexIn < stringArray[index].length && indexIn < (stringArray[index].length - 1); indexIn++) {
+      findedId = stringArray[index][0]
+      calValue = calValue + isNaN(parseInt(stringArray[index][indexIn])) === false ? 0 : parseInt(stringArray[index][indexIn]);
+      storeArray.splice(index, 0, calValue)
+    }
+    
+    storeRowArray.push({id: stringArray[index][0], value: storeArray.map((e)=>isNaN(e)?0:e).reduce((a, b) => a + b)})
+    console.log(storeRowArray);
+    storeArray = []
+    calValue = 0
+  }
+
+  for (let index = 0; index < storeRowArray.length; index++) {
+    const element = storeRowArray[index];
+    console.log(element);
+    document.getElementById(element.id).innerHTML = element.value
+  }
+  // debugger
+  // return sheetData
 }
 
 window.collectExcel = function collectExcel() {
