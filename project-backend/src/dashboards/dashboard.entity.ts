@@ -15,6 +15,9 @@ import {
     @AutoIncrement
     @Column
     id!: number;
+
+    @Column
+    dashboardProjectId: string;
   
     @Column
     dashboardId!: string;

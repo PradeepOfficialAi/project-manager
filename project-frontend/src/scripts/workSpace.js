@@ -94,7 +94,7 @@ window.nextWeekFunc = function nextWeekFunc(value, weekNextIn) {
   // displayListData()
   setUpdate = false
   dashboardPushId = ''
-getListData()
+// getListData()
 
     if (weekNextIn === 0) {
         prevWeekFunc(value, weekNextIn)
@@ -118,7 +118,7 @@ window.prevWeekFunc = function prevWeekFunc(value, weekPrevIn) {
   // displayListData()
   setUpdate = false
   dashboardPushId = ''
-  getListData()
+  // getListData()
 
     if (weekPrevIn === 0) {
         
@@ -168,35 +168,31 @@ html += "</table>";
 document.getElementById("result").innerHTML = html;
 currentDay = [];
 
-getListData()
-
+  }).then(data => {
+    getListData()
   })
+
     // let array = [1,2,3]  // Replace with employee table
     
 }
-displayFunc(weekStart);
 
 function getListData() {
-let firstTime = true;
+debugger
+let listFirstTime = true;
 
-  let store = '';
+  let storeList = '';
   // let assignArray = [];
   var n1 = document.getElementById("mockup").rows.length;
-  console.log(n1, "n1");
   for(i=0; i<n1;i++){
     var n2 = document.getElementById("mockup").rows[i].cells.length;
-    console.log(n2, "n2");
     for(j=0; j<n2;j++){
       var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
-      console.log(x, "X");
-      if (j === 1 && firstTime === true) {
-        console.log(j, "j");
+      if (j === 1 && listFirstTime === true) {
         for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
-          store += x.split('<br>')[1].split('-')[index]
-          
+          storeList += x.split('<br>')[1].split('-')[index]
         }
 
-        firstTime = false
+        listFirstTime = false
       }
       cellData.push(x)
     }
@@ -204,13 +200,16 @@ let firstTime = true;
     cellData = []
   }
   // let stringify = JSON.stringify(rowData)
-
+  console.log(storeList);
   const data = JSON.stringify({
     query: dashboardQueries.getDashboards,
     variables: {
       filter: {
         dashboardId: {
-          eq: store
+          eq: storeList
+        },
+        dashboardProjectId:{
+          eq: localStorage.getItem("projectName")
         }
       }
     }
@@ -219,34 +218,131 @@ let firstTime = true;
   .then(data => {
     processDataDashboard = data.data.dashboards.edges
     for (let index = 0; index < processDataDashboard.length; index++) {
-        const element = processDataDashboard[index];
-        if (element.node.dashboardId === store) {
-          dashboardPushId = element.node.id
-          setUpdate = true
-          // displayListData()
-          assignArray = JSON.parse(element.node.dashboardArray)
-          var n1 = document.getElementById("mockup").rows.length;
-          var i=0,j=0;
-          for(i=0; i<n1;i++){
-            var n2 = document.getElementById("mockup").rows[i].cells.length;
-            for(j=0; j<assignArray[i].length;j++){
-              document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
-            }
+      const element = processDataDashboard[index];
+      if (element.node.dashboardId === storeList) {
+        dashboardPushId = element.node.id
+        setUpdate = true
+        assignArray = JSON.parse(element.node.dashboardArray)
+        var n1 = document.getElementById("mockup").rows.length;
+        var i=0,j=0;
+        for(i=0; i<n1;i++){
+          var n2 = document.getElementById("mockup").rows[i].cells.length;
+          for(j=0; j<assignArray[i].length;j++){
+            document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
           }
+        }
       }
-  } 
-if (setUpdate === false) {
-createListData()
-}
+    } 
   })
-  .catch((error) => {
-  console.error('Error:', error);
-  });
+  // .catch((error) => {
+  // console.error('Error:', error);
+  // });
+}
 
+function createListData(dashId, createStringify) {
+  console.log(dashId, createStringify);
+debugger
+// var n1 = document.getElementById("mockup").rows.length;
+  // var i=0,j=0;
+  // let store = ''
+  // let firstTime = true;
+  // let cellData = [];
+  // let rowData = [];
+  // for(i=0; i<n1;i++){
+  //   var n2 = document.getElementById("mockup").rows[i].cells.length;
+  //   for(j=0; j<n2;j++){
+  //     var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
+  //     if (j === 1 && firstTime === true) {
+  //       for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
+  //         store += x.split('<br>')[1].split('-')[index]
+          
+  //       }
+  //       firstTime = false
+  //     }
+  //     cellData.push(x)
+  //   }
+  //   rowData.splice(i, 0,cellData)
+  //   cellData = []
+  // }
+  // let stringify = JSON.stringify(rowData)
+  const data = JSON.stringify({
+    query: dashboardMutations.createDashboard,
+    variables: {
+        input: {
+            dashboard: {
+                dashboardProjectId: localStorage.getItem("projectName"),
+                dashboardId: dashId,
+                dashboardArray: [createStringify]
+            }
+        }
+    }
+});
+if (setUpdate === false) {
+callApi(data)
+// .then(response => response.json())
+//       .then(data => {
+//         dashboardPushId  = data.data.createOneDashboard.id
+//       })
+// displayListData()
+  
+}
+}
+
+
+
+function updateListData(id, storeUpdate, updateStringify) {
+  console.log(id, updateStringify);
+
+debugger
+// let firstTime = true;
+
+  // let store = '';
+  // var n1 = document.getElementById("mockup").rows.length;
+
+  // for(i=0; i<n1;i++){
+  //   var n2 = document.getElementById("mockup").rows[i].cells.length;
+  //   for(j=0; j<n2;j++){
+  //     var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
+  //     if (j === 1 && firstTime === true) {
+  //       for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
+  //         store += x.split('<br>')[1].split('-')[index]
+          
+  //       }
+  //       firstTime = false
+  //     }
+  //     cellData.push(x)
+  //   }
+  //   rowData.splice(i, 0,cellData)
+  //   cellData = []
+  // }
+  // let stringify = JSON.stringify(rowData)
+
+  const data = JSON.stringify({
+    query: dashboardMutations.updateDashboard,
+    variables: {
+        input: {
+          id: parseInt(id),
+          update: {
+                dashboardId: storeUpdate,
+                dashboardArray: [updateStringify]
+            }
+      }
+    }
+  }); 
+  if (setUpdate) {
+    callApi(data).then(data => {
+      dashboardPushId = ''
+      setUpdate = false
+      // displayListData()
+    })
+  }
 
 }
 
-function createListData() {
+
+window.collectExcel = function collectExcel() {
+
+
   var n1 = document.getElementById("mockup").rows.length;
   var i=0,j=0;
   let store = ''
@@ -270,77 +366,14 @@ function createListData() {
     cellData = []
   }
   let stringify = JSON.stringify(rowData)
-  const data = JSON.stringify({
-    query: dashboardMutations.createDashboard,
-    variables: {
-        input: {
-            dashboard: {
-                dashboardId: store,
-                dashboardArray: [stringify]
-            }
-        }
-    }
-});
-if (setUpdate === false) {
-callApi(data).then(response => response.json())
-      .then(data => {
-        debugger
-        dashboardPushId  = data.data.createOneDashboard.id
-      }
-      )
-// displayListData()
-  
-}
-}
-
-
-
-window.updateListData = function updateListData() {
-  let firstTime = true;
-
-  let store = '';
-  var n1 = document.getElementById("mockup").rows.length;
-
-  for(i=0; i<n1;i++){
-    var n2 = document.getElementById("mockup").rows[i].cells.length;
-    for(j=0; j<n2;j++){
-      var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
-      if (j === 1 && firstTime === true) {
-        for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
-          store += x.split('<br>')[1].split('-')[index]
-          
-        }
-        firstTime = false
-      }
-      cellData.push(x)
-    }
-    rowData.splice(i, 0,cellData)
-    cellData = []
-  }
-  let stringify = JSON.stringify(rowData)
-
-  const data = JSON.stringify({
-    query: dashboardMutations.updateDashboard,
-    variables: {
-        input: {
-          id: parseInt(dashboardPushId),
-          update: {
-                dashboardId: store,
-                dashboardArray: [stringify]
-            }
-      }
-    }
-  }); 
   if (setUpdate) {
-    callApi(data).then(data => {
-      dashboardPushId = ''
-      setUpdate = false
-      // displayListData()
-    })
+    updateListData(dashboardPushId, store, stringify)
+  } else {
+    createListData(store, stringify)
   }
-
+  console.log(stringify, setUpdate, dashboardPushId);
 }
-
+displayFunc(weekStart);
 
 
 // function displayListData() {

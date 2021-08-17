@@ -9,6 +9,7 @@ input CreateDashboard {
   created: DateTime
   dashboardArray: JSON
   dashboardId: String
+  dashboardProjectId: String
   id: ID
   updated: DateTime
 }
@@ -104,12 +105,14 @@ type Dashboard {
   created: DateTime!
   dashboardArray: JSON
   dashboardId: String!
+  dashboardProjectId: String!
   id: ID!
   updated: DateTime!
 }
 
 type DashboardAggregateGroupBy {
   dashboardId: String
+  dashboardProjectId: String
   id: ID
 }
 
@@ -127,12 +130,14 @@ type DashboardConnection {
 
 type DashboardCountAggregate {
   dashboardId: Int
+  dashboardProjectId: Int
   id: Int
 }
 
 input DashboardDeleteFilter {
   and: [DashboardDeleteFilter!]
   dashboardId: StringFieldComparison
+  dashboardProjectId: StringFieldComparison
   id: IDFilterComparison
   or: [DashboardDeleteFilter!]
 }
@@ -141,6 +146,7 @@ type DashboardDeleteResponse {
   created: DateTime
   dashboardArray: JSON
   dashboardId: String
+  dashboardProjectId: String
   id: ID
   updated: DateTime
 }
@@ -156,17 +162,20 @@ type DashboardEdge {
 input DashboardFilter {
   and: [DashboardFilter!]
   dashboardId: StringFieldComparison
+  dashboardProjectId: StringFieldComparison
   id: IDFilterComparison
   or: [DashboardFilter!]
 }
 
 type DashboardMaxAggregate {
   dashboardId: String
+  dashboardProjectId: String
   id: ID
 }
 
 type DashboardMinAggregate {
   dashboardId: String
+  dashboardProjectId: String
   id: ID
 }
 
@@ -178,6 +187,7 @@ input DashboardSort {
 
 enum DashboardSortFields {
   dashboardId
+  dashboardProjectId
   id
 }
 
@@ -188,6 +198,7 @@ type DashboardSumAggregate {
 input DashboardUpdateFilter {
   and: [DashboardUpdateFilter!]
   dashboardId: StringFieldComparison
+  dashboardProjectId: StringFieldComparison
   id: IDFilterComparison
   or: [DashboardUpdateFilter!]
 }
@@ -810,6 +821,7 @@ input UpdateDashboard {
   created: DateTime
   dashboardArray: JSON
   dashboardId: String
+  dashboardProjectId: String
   id: ID
   updated: DateTime
 }
