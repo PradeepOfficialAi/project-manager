@@ -78,6 +78,7 @@ input CreateProject {
 
 input CreateTask {
   created: DateTime
+  dashboardTaskId: String
   endDate: DateTime
   id: ID
   projectNameId: Int
@@ -707,6 +708,7 @@ input StringFieldComparison {
 
 type Task {
   created: DateTime
+  dashboardTaskId: String!
   endDate: DateTime
   id: ID!
   projectName: Project
@@ -718,6 +720,7 @@ type Task {
 }
 
 type TaskAggregateGroupBy {
+  dashboardTaskId: String
   id: ID
   projectNameId: Int
   taskName: String
@@ -740,6 +743,7 @@ type TaskConnection {
 }
 
 type TaskCountAggregate {
+  dashboardTaskId: Int
   id: Int
   projectNameId: Int
   taskName: Int
@@ -747,6 +751,7 @@ type TaskCountAggregate {
 
 input TaskDeleteFilter {
   and: [TaskDeleteFilter!]
+  dashboardTaskId: StringFieldComparison
   id: IDFilterComparison
   or: [TaskDeleteFilter!]
   projectNameId: IntFieldComparison
@@ -755,6 +760,7 @@ input TaskDeleteFilter {
 
 type TaskDeleteResponse {
   created: DateTime
+  dashboardTaskId: String
   endDate: DateTime
   id: ID
   projectNameId: Int
@@ -774,6 +780,7 @@ type TaskEdge {
 
 input TaskFilter {
   and: [TaskFilter!]
+  dashboardTaskId: StringFieldComparison
   id: IDFilterComparison
   or: [TaskFilter!]
   projectNameId: IntFieldComparison
@@ -781,12 +788,14 @@ input TaskFilter {
 }
 
 type TaskMaxAggregate {
+  dashboardTaskId: String
   id: ID
   projectNameId: Int
   taskName: String
 }
 
 type TaskMinAggregate {
+  dashboardTaskId: String
   id: ID
   projectNameId: Int
   taskName: String
@@ -799,6 +808,7 @@ input TaskSort {
 }
 
 enum TaskSortFields {
+  dashboardTaskId
   id
   projectNameId
   taskName
@@ -811,6 +821,7 @@ type TaskSumAggregate {
 
 input TaskUpdateFilter {
   and: [TaskUpdateFilter!]
+  dashboardTaskId: StringFieldComparison
   id: IDFilterComparison
   or: [TaskUpdateFilter!]
   projectNameId: IntFieldComparison
@@ -919,6 +930,7 @@ input UpdateProject {
 
 input UpdateTask {
   created: DateTime
+  dashboardTaskId: String
   endDate: DateTime
   id: ID
   projectNameId: Int

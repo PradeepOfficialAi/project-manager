@@ -84,8 +84,16 @@ document.getElementById("projectNameId").innerHTML = htmlProject
 
 function callMeTODisplaytask() {
   const data = JSON.stringify({
-    query: taskQueries.getTasks
+    query: taskQueries.getTasks,
+    variables: {
+      filter: {
+        dashboardTaskId: {
+          eq: localStorage.getItem("projectName")
+        }
+      }
+    }
   });
+  debugger
   callApi(data).then(response => response.json())
   .then(data => {
     if(data.data != null) {
@@ -97,6 +105,7 @@ function callMeTODisplaytask() {
           processedArraytask.push(element.node)
       }
       displayCards(processedArraytask)
+      // processedArraytask = []
     }
   })
   .catch((error) => {
@@ -258,11 +267,14 @@ let endDate = date[1]
                   endDate: endDate,
                   projectNameId: parseInt(document.forms[0][2].value),
                   taskDevelopers: element,
+                  dashboardTaskId: localStorage.getItem("projectName")
               }
           }
       }
   });
+
   callApi(data)
+
 }
 
 $(function() {

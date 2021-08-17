@@ -23,6 +23,10 @@ import { ProjectEntity } from 'src/projects/project.entity';
     @Column
     taskName!: string;
   
+    
+    @Column
+    dashboardTaskId: string;
+
     @Column
     @ForeignKey(() => ProjectEntity)
     projectNameId: number;

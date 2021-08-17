@@ -16,6 +16,9 @@ export class TaskDTO {
     // @FilterableField()
     // projectName!: string;
   
+    @FilterableField()
+    dashboardTaskId: string;
+
     @FilterableField(() => Int, { nullable: true })
     projectNameId!: number;
 

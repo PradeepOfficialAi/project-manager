@@ -1,23 +1,23 @@
 
 
 const getTasks = `
-query {
-    tasks {
-      totalCount
-      edges {
-        node {
-          id
-          taskName
-          startDate
-          endDate
-          projectName {
-            projectName
-          }
-          taskDevelopers 
+query tasks($filter: TaskFilter!) {
+  tasks(filter: $filter) {
+    totalCount
+    edges {
+      node {
+        id
+        taskName
+        startDate
+        endDate
+        projectName {
+          projectName
         }
+        taskDevelopers
       }
     }
   }
+}
   
 `
 
