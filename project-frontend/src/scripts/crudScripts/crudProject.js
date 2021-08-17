@@ -24,6 +24,13 @@ window.onclick = function(event) {
   }
 }
 
+
+window.callCreateProject = function callCreateProject() {
+  document.getElementById("createProjectShow").style.display = "block";
+  document.getElementById("callProjectPopup").style.display = "none";
+  
+}
+
 function callMeTODisplayEmployee() {
   const data = JSON.stringify({
     query: queries.getEmployes
@@ -38,6 +45,8 @@ function callMeTODisplayEmployee() {
       processedArray.push(element.node)
     }
     displayOption(processedArray)
+    document.getElementById("createProjectShow").style.display = "none";
+    document.getElementById("callProjectPopup").style.display = "block";
   })
 }
 
@@ -92,6 +101,22 @@ function displayCards(cards) {
     </div>
     `
   }
+  // var html = "<th>id</th><th>Project Name</th><th>Lead</th><th>Developers</th> <th>Actions</th>";
+  // cards.forEach((entry) => {
+  //   html += "<tr>";
+  //   for (var k in entry){
+  //     html += "<td>" + entry[k] + "</td>";
+  //   }
+  //   html+= "<td>" + `
+  //   <a style="color: #3b5998;width:5px;margin-left:10px"
+  //   ><i id="employeUpdate" onclick="employeUpdate('update')" class="far fa-edit fa-lg"></i
+  //   ></a>
+  //   <span style="color: #3b5998;width:5px;margin-left:10px"
+  //   ><i id="employeDelete" onclick="projectDelete('`+ cards[index].id +`')" class="fas fa-archive fa-lg"></i
+  //   ></span>
+  //   ` + "</td>";
+  //   html += `</tr>`;
+  // });
   document.getElementById('projectCards').innerHTML = html
 }
 
@@ -180,6 +205,7 @@ window.createProject = function createProject() {
   let element = []
   for (let index = 0; index < developers.length; index++) {
     element.push(developers[index].textContent)
+    debugger
   }
 
   let date = (document.forms[0][1].value).split(" - ")

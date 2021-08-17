@@ -42,7 +42,7 @@
 
     <main style="margin-top: 58px">
         <div class="container pt-4">
-          <form>
+          <form style="display: none;" id="createProjectShow">
             <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="projectName">Project Name</label>
@@ -70,17 +70,20 @@
           </div>
             <button type="submit" onclick="createProject()" class="btn btn-primary">Create Project</button>
           </form>
+
+          <button type="button" id="callProjectPopup" onclick="callCreateProject()" class="btn btn-primary">Create Project</button>
           <hr>
 
-          <div id="projectCards">
-        </div>
+          <!-- <div id="projectCards">
+        </div> -->
+        <table id="projectCards"></table>
 
             <div id="projectModal" class="modal">
 
               <!-- Modal content -->
               <div class="modal-content">
                 <div class="modal-header">
-                  <h2>Update Employee</h2>
+                  <h2>Update Project</h2>
                   <span class="close">&times;</span>
                 </div>
                 <div class="modal-body">

@@ -141,3 +141,82 @@ body {
   margin-left: 50px;
   margin-right: 50px;
 }
+
+
+
+#projectCards {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#projectCards td, #projectCards th{
+  border:1px solid #ddd;
+  padding: 8px;
+}
+
+#projectCards tr:hover {
+  background-color: #ddd;
+}
+#projectCards th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6bb5fa;
+  color: white;
+}
+.calendarButton {
+  background-color: turquoise;
+  padding: 10px;
+  text-align: center;
+  font-style:normal;
+  font-size: medium;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.container {
+  margin-top: 10px;
+}
+#result {
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+
+#employeeDashboardSet {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#employeeDashboardSet td, #employeeDashboardSet th{
+  border:1px solid #ddd;
+  padding: 8px;
+}
+
+#employeeDashboardSet tr:hover {
+  background-color: #ddd;
+}
+#employeeDashboardSet th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6bb5fa;
+  color: white;
+}
+.calendarButton {
+  background-color: turquoise;
+  padding: 10px;
+  text-align: center;
+  font-style:normal;
+  font-size: medium;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.container {
+  margin-top: 10px;
+}
+#result {
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+}

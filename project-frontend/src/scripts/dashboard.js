@@ -101,7 +101,7 @@ function showDashBoardCount() {
         </div>
         <div class="row">
           <div class="col-xl-6 col-md-12 mb-4">
-            <div id="employee" class="card">
+            <div id="employee" onclick="listEmployeeDashboard()" class="card">
               <div class="card-body">
                 <div class="d-flex justify-content-between p-md-1">
                   <div class="d-flex flex-row">
@@ -129,4 +129,8 @@ document.getElementById('mainHeader').innerHTML = mainHeader
 window.listProjectDashboard = function listProjectDashboard() {
   window.location.href = `./project.html`;
 
+}
+
+window.listEmployeeDashboard = function listEmployeeDashboard() {
+  window.location.href = `./employe.html`;
 }

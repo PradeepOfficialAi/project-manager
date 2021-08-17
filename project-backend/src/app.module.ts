@@ -14,7 +14,7 @@ import { DashboardsModule } from './dashboards/dashboards.module';
     EmployeeModule,
     SequelizeModule.forRoot({
       host: 'localhost',
-      port:5432,
+      port:7777,
       dialect: 'postgres',
       database: 'projects',
       username: 'postgres',
