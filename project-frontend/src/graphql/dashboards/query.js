@@ -1,18 +1,18 @@
 
 
 const getDashboards = `
-query {
-    dashboards {
-      edges {
-        node {
-          id
-          dashboardId
-          dashboardArray
-        }
+query dashboards($filter: DashboardFilter!) {
+  dashboards(filter: $filter) {
+    edges {
+      node {
+        id
+        dashboardId
+        dashboardArray
       }
     }
   }
-  
+}
+
 `
 
 export {

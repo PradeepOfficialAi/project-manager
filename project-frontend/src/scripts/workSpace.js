@@ -25,7 +25,14 @@ let processedArray = [];
 let processData;
 let processDataProject = [];
 let processedArrayProject = [];
-
+let dashboardPushId;
+var i=0,j=0;
+// let store = ''
+let cellData = [];
+let rowData = [];
+let assignArray = [];
+let setUpdate = false;
+let processDataDashboard;
 
 document.getElementsByClassName('input1')[0].value = currentWeekNumber
 document.getElementsByClassName('input2')[0].value = enterCurrentYear
@@ -83,6 +90,12 @@ window.updateWeekYear = function updateWeekYear(value, defType) {
 }
 
 window.nextWeekFunc = function nextWeekFunc(value, weekNextIn) {
+
+  // displayListData()
+  setUpdate = false
+  dashboardPushId = ''
+getListData()
+
     if (weekNextIn === 0) {
         prevWeekFunc(value, weekNextIn)
     } else {
@@ -102,6 +115,11 @@ window.resetYear = function resetYear(params) {
     document.getElementsByClassName('input2')[0].value = enterCurrentYear
 }
 window.prevWeekFunc = function prevWeekFunc(value, weekPrevIn) {
+  // displayListData()
+  setUpdate = false
+  dashboardPushId = ''
+  getListData()
+
     if (weekPrevIn === 0) {
         
         prevWeek = currentDate.clone().subtract(weekPrevIn, 'week').clone().startOf('week')
@@ -149,13 +167,84 @@ for (let index = 0; index < processDataProject.length; index++) {
 html += "</table>";
 document.getElementById("result").innerHTML = html;
 currentDay = [];
-createListData()
+
+getListData()
 
   })
     // let array = [1,2,3]  // Replace with employee table
     
 }
 displayFunc(weekStart);
+
+function getListData() {
+let firstTime = true;
+
+  let store = '';
+  // let assignArray = [];
+  var n1 = document.getElementById("mockup").rows.length;
+  console.log(n1, "n1");
+  for(i=0; i<n1;i++){
+    var n2 = document.getElementById("mockup").rows[i].cells.length;
+    console.log(n2, "n2");
+    for(j=0; j<n2;j++){
+      var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
+      console.log(x, "X");
+      if (j === 1 && firstTime === true) {
+        console.log(j, "j");
+        for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
+          store += x.split('<br>')[1].split('-')[index]
+          
+        }
+
+        firstTime = false
+      }
+      cellData.push(x)
+    }
+    rowData.splice(i, 0,cellData)
+    cellData = []
+  }
+  // let stringify = JSON.stringify(rowData)
+
+  const data = JSON.stringify({
+    query: dashboardQueries.getDashboards,
+    variables: {
+      filter: {
+        dashboardId: {
+          eq: store
+        }
+      }
+    }
+  });
+  callApi(data).then(response => response.json())
+  .then(data => {
+    processDataDashboard = data.data.dashboards.edges
+    for (let index = 0; index < processDataDashboard.length; index++) {
+        const element = processDataDashboard[index];
+        if (element.node.dashboardId === store) {
+          dashboardPushId = element.node.id
+          setUpdate = true
+          // displayListData()
+          assignArray = JSON.parse(element.node.dashboardArray)
+          var n1 = document.getElementById("mockup").rows.length;
+          var i=0,j=0;
+          for(i=0; i<n1;i++){
+            var n2 = document.getElementById("mockup").rows[i].cells.length;
+            for(j=0; j<assignArray[i].length;j++){
+              document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
+            }
+          }
+      }
+  } 
+if (setUpdate === false) {
+createListData()
+}
+  })
+  .catch((error) => {
+  console.error('Error:', error);
+  });
+
+
+}
 
 function createListData() {
   var n1 = document.getElementById("mockup").rows.length;
@@ -180,8 +269,6 @@ function createListData() {
     rowData.splice(i, 0,cellData)
     cellData = []
   }
-  console.log(JSON.stringify(rowData));
-  console.log(JSON.parse([JSON.stringify(rowData)]));
   let stringify = JSON.stringify(rowData)
   const data = JSON.stringify({
     query: dashboardMutations.createDashboard,
@@ -194,85 +281,89 @@ function createListData() {
         }
     }
 });
-debugger
-callApi(data)
-}
-
-window.updateListData = function updateListData() {
+if (setUpdate === false) {
+callApi(data).then(response => response.json())
+      .then(data => {
+        debugger
+        dashboardPushId  = data.data.createOneDashboard.id
+      }
+      )
+// displayListData()
   
 }
-window.getListData = function getListData() {
-  let assignArray = [
-    ["Employees", "Sun <br>15-08-2021", "Mon <br>16-08-2021", "Tue <br>17-08-2021", "Wed <br>18-08-2021", "Thu <br>19-08-2021", "Fri <br>20-08-2021", "Sat <br>21-08-2021"],
-    ["2", "Jesus", "", "", "", "", "", ""],
-    ["peter", "", "", "", "", "", "", ""]
-  ]
+}
+
+
+
+window.updateListData = function updateListData() {
+  let firstTime = true;
+
+  let store = '';
   var n1 = document.getElementById("mockup").rows.length;
-  var i=0,j=0;
+
   for(i=0; i<n1;i++){
     var n2 = document.getElementById("mockup").rows[i].cells.length;
-    for(j=0; j<assignArray[i].length;j++){
-      document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
+    for(j=0; j<n2;j++){
+      var x=document.getElementById("mockup").rows[i].cells.item(j).innerHTML;
+      if (j === 1 && firstTime === true) {
+        for (let index = 0; index < x.split('<br>')[1].split('-').length; index++) {
+          store += x.split('<br>')[1].split('-')[index]
+          
+        }
+        firstTime = false
+      }
+      cellData.push(x)
     }
+    rowData.splice(i, 0,cellData)
+    cellData = []
+  }
+  let stringify = JSON.stringify(rowData)
+
+  const data = JSON.stringify({
+    query: dashboardMutations.updateDashboard,
+    variables: {
+        input: {
+          id: parseInt(dashboardPushId),
+          update: {
+                dashboardId: store,
+                dashboardArray: [stringify]
+            }
+      }
+    }
+  }); 
+  if (setUpdate) {
+    callApi(data).then(data => {
+      dashboardPushId = ''
+      setUpdate = false
+      // displayListData()
+    })
   }
 
 }
 
 
-// function callMeTODisplayEmployee() {
+
+// function displayListData() {
 //   const data = JSON.stringify({
-//     query: queries.getEmployes
+//     query: dashboardQueries.getDashboards
 //   });
 //   callApi(data).then(response => response.json())
 //   .then(data => {
-//   processData = data.data.employees.edges
-//   for (let index = 0; index < processData.length; index++) {
-//       const element = processData[index];
-//       delete element.node.created
-//       delete element.node.updated
-//       processedArray.push(element.node)
-//   }
-//   // displayOption(processedArray)
-//   })
-//   .catch((error) => {
-//   console.error('Error:', error);
+//     let processDataDashboard = data.data.dashboards.edges
+//     for (let index = 0; index < processDataDashboard.length; index++) {
+//       const element = processDataDashboard[index];
+//       // if (element.node.dashboardId === store) {
+//         assignArray = JSON.parse(element.node.dashboardArray)
+//         var n1 = document.getElementById("mockup").rows.length;
+//         var i=0,j=0;
+//         for(i=0; i<n1;i++){
+//           var n2 = document.getElementById("mockup").rows[i].cells.length;
+//           for(j=0; j<assignArray[i].length;j++){
+//             document.getElementById("mockup").rows[i].cells.item(j).innerHTML = assignArray[i][j]
+//           }
+//         // }
+//       }
+//     }
 //   });
-
 // }
-
-// callMeTODisplayEmployee();
-
-// (function callMeTODisplayProject() {
-  
-// })();
-
-// document.getElementById('editTable').innerHTML = `
-//   <thead>
-//     <tr>
-//       <th class="table-active" scope="col">#</th>
-//       <th scope="col">First</th>
-//       <th scope="col">Last</th>
-//       <th scope="col">Handle</th>
-//     </tr>
-//   </thead>
-//   <tbody>
-//     <tr class="table-active">
-//       <th scope="row">1</th>
-//       <td>Mark</td>
-//       <td>Otto</td>
-//       <td>@mdo</td>
-//     </tr>
-//     <tr>
-//       <th scope="row">2</th>
-//       <td>Jacob</td>
-//       <td>Thornton</td>
-//       <td>@fat</td>
-//     </tr>
-//     <tr>
-//       <th scope="row">3</th>
-//       <td id="content" contenteditable="true"></td>
-//       <td>@twitter</td>
-//       <td id="content" contenteditable="true">Demo</td>
-//     </tr>
-//   </tbody>
-// `
+// displayListData()
