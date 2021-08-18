@@ -133,7 +133,7 @@ window.updateSqlProject = function updateSqlProject() {
   let developers = document.getElementsByName('projectInputPop')[0].childNodes
   let element = []
   for (let index = 0; index < developers.length; index++) {
-     element.push(developers[index].value)
+     element.push(developers[index].textContent)
   }
   let projectName = document.forms[1][0].value
   let projectLeaderId = document.forms[1][2].value
