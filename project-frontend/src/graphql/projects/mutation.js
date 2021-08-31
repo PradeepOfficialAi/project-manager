@@ -8,6 +8,7 @@ mutation createProject($input: CreateOneProjectInput!) {
       endDate
       projectLeaderId
       projectLeader {
+        id
         employeName
       }
       projectDevelopers
@@ -25,6 +26,7 @@ mutation updateProject($input: UpdateOneProjectInput!) {
     endDate
     projectLeaderId
     projectLeader {
+      id
       employeName
     }
     projectDevelopers

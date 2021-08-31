@@ -29,8 +29,8 @@ import { EmployeeEntity } from 'src/employees/employee.entity';
     @BelongsTo(() => EmployeeEntity, 'projectLeaderId')
     projectLeader: EmployeeEntity
   
-    @Column({ type: DataType.ARRAY(DataType.STRING) })
-    projectDevelopers!: string[];
+    @Column({ type: DataType.ARRAY(DataType.JSONB) })
+    projectDevelopers!: JSON[];
   
     @Column
     startDate!: Date;

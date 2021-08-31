@@ -11,6 +11,7 @@ query {
           endDate
           projectLeaderId
           projectLeader {
+            id
             employeName
           }
           projectDevelopers

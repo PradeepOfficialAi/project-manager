@@ -1,6 +1,8 @@
 import { FilterableField, IDField, QueryOptions, Relation } from '@nestjs-query/query-graphql';
 import { ObjectType, GraphQLISODateTime, Field, ID, Int } from '@nestjs/graphql';
+// import { JSONB } from 'sequelize/types';
 import { EmployeeDTO } from 'src/employees/employee.dto';
+import graphqlTypeJson from "graphql-type-json";
 
 @ObjectType('Project')
 @QueryOptions({ enableTotalCount: true })
@@ -15,8 +17,8 @@ export class ProjectDTO {
   @FilterableField(() => Int, { nullable: true })
   projectLeaderId!: number;
 
-  @Field(() => [String], { nullable: true })
-  projectDevelopers!: string[];
+  @Field(() => graphqlTypeJson, { nullable: true })
+  projectDevelopers!: object;
 
   @Field(() => GraphQLISODateTime, { nullable: true })
   startDate!: Date;

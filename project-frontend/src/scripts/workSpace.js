@@ -141,16 +141,16 @@ window.displayFunc = function displayFunc(weekDays) {
   callApi(data).then(response => response.json())
   .then(data => {
     processDataProject = data.data.projects.edges[0].node.projectDevelopers
-    processDataProject.push(localStorage.getItem("projectLaed"))
+    // processDataProject.push(localStorage.getItem("projectLaed"))
     for (let index = 0; index <= 6; index++) {
       currentDay.push(moment(weekDays).add(index, 'days').format("DD-MM-YYYY"))
   }
 
   var html = "<table id='mockup'><th>Employees</th><th>Sun <br>"+ currentDay[0] +"</th><th>Mon <br>"+ currentDay[1] +"</th><th>Tue <br>"+ currentDay[2] +"</th> <th>Wed <br>"+ currentDay[3] +"</th> <th>Thu <br>"+ currentDay[4] +"</th> <th>Fri <br>"+ currentDay[5] +"</th> <th>Sat <br>"+ currentDay[6] +"</th><th>Per/Employee <br> total hour </th>";
   for (let index = 0; index < processDataProject.length; index++) {
-    html += `<tr><td>`+ processDataProject[index] +`</td>`
+    html += `<tr><td>`+ processDataProject[index].name +`</td>`
     for (let indexCell = 0; indexCell < currentDay.length; indexCell++) {
-        html += `<td id="content`+ index + indexCell +`" contenteditable="true">0</td>`
+        html += `<td id="content`+ index + indexCell +`" contenteditable="true"></td>`
     }
     html += `<td id="`+ processDataProject[index] +`"></td></tr>`
   }

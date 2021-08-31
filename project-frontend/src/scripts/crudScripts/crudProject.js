@@ -24,7 +24,6 @@ window.onclick = function(event) {
   }
 }
 
-
 window.callCreateProject = function callCreateProject() {
   document.getElementById("createProjectShow").style.display = "block";
   document.getElementById("callProjectPopup").style.display = "none";
@@ -70,6 +69,13 @@ function callMeTODisplayProject() {
 function displayCards(cards) {
   let html = ``;
   for (let index = 0; index < cards.length; index++) {
+    let sendArrayId = [];
+    let sendArrayName = [];
+  cards[index].projectDevelopers.filter(value => {
+    sendArrayId.push(value.id);
+    sendArrayName.push(value.name)
+  });
+
     html += `
     <div id="projectCards">
       <div class="row">
@@ -87,10 +93,14 @@ function displayCards(cards) {
                   </div>
                   <div class="text-end">
                   <a style="color: #3b5998;"
-                      ><i id="projectUpdate" onclick="projectUpdate('`+ cards[index].id +`', '`+ cards[index].projectName +`', '`+ cards[index].startDate +`', '`+ cards[index].endDate +`', '`+ cards[index].projectLeader.employeName +`', '`+ cards[index].projectDevelopers +`')" class="far fa-edit fa-3x"></i
+                      ><i id="projectUpdate" onclick="projectUpdate('`+ cards[index].id +`',
+                       '`+ cards[index].projectName +`', '`+ cards[index].startDate +`',
+                        '`+ cards[index].endDate +`', '`+ cards[index].projectLeader.id +`',
+                       '`+ sendArrayId +`')" class="far fa-edit fa-3x"></i
                     ></a>
                     <span style="color: #3b5998;"
-                      ><i id="projectDelete" onclick="projectDelete('`+ cards[index].id +`')" class="fas fa-archive fa-3x"></i
+                      ><i id="projectDelete" onclick="projectDelete('`+ cards[index].id +`')"
+                       class="fas fa-archive fa-3x"></i
                     ></span>
                   </div>
                 </div>
@@ -125,15 +135,43 @@ window.projectUpdate = function projectUpdate(value1,value2, value3, value4, val
   projectPushId = value1
   document.getElementById('projectNamePop').value = value2
   document.getElementById('projectDatePop').value = value3.split("T")[0] + '-' + value4.split("T")[0]
-  document.getElementById('projectSelectLeadPop').innerHTML = html//value5
-  document.getElementById('choices-multiple-remove-button').value = value6
+  document.getElementById('projectSelectLeadPop').innerHTML = html
+  // let haveNodes = document.getElementById('projectSelectLeadPop').childNodes
+
+
+  // let htmlProjectUpdate = ``;
+  // let value6 = value6.id
+  // console.log( value6 = JSON.parse(value6));
+
+  // document.getElementById("projectSelectLead").innerHTML = htmlProjectUpdate
+  value6 = value6.split(',')
+  $( 'select[name="projectInputPop"]' ).append( html );
+  for (let index = 0; index < value6.length; index++) {
+    $(`select option[value='`+ value6[index] +`']`).attr("selected",true);
+  }
+  // haveNodes.forEach(value => {
+  //   console.log(value.id);
+  //   value.id === 'projectSelectDev' + value5 ? document.getElementById(value.id).value = 'aaaa': 'nothing'
+  // })
+
+  $(document).ready(function(){
+
+    var multipleCancelButton = new Choices('#choices-multiple-remove-button-pop', {
+    removeItemButton: true,
+    maxItemCount:5,
+    searchResultLimit:5,
+    renderChoiceLimit:5
+    });
+  });
+
+  // document.getElementById('choices-multiple-remove-button').innerHTML = `<option>option1</option>`// value6
 }
 
 window.updateSqlProject = function updateSqlProject() {
   let developers = document.getElementsByName('projectInputPop')[0].childNodes
   let element = []
   for (let index = 0; index < developers.length; index++) {
-     element.push(developers[index].textContent)
+     element.push({ id: developers[index].value, name: developers[index].textContent })
   }
   let projectName = document.forms[1][0].value
   let projectLeaderId = document.forms[1][2].value
@@ -188,26 +226,24 @@ function displayOption(options) {
     });
   });
 
-  $( 'select[name="projectInputPop"]' ).append( html );
-  $(document).ready(function(){
+  // $( 'select[name="projectInputPop"]' ).append( html );
+  // $(document).ready(function(){
 
-    var multipleCancelButton = new Choices('#choices-multiple-remove-button-pop', {
-    removeItemButton: true,
-    maxItemCount:5,
-    searchResultLimit:5,
-    renderChoiceLimit:5
-    });
-  });
+  //   var multipleCancelButton = new Choices('#choices-multiple-remove-button-pop', {
+  //   removeItemButton: true,
+  //   maxItemCount:5,
+  //   searchResultLimit:5,
+  //   renderChoiceLimit:5
+  //   });
+  // });
 }
 
 window.createProject = function createProject() {
   let developers = document.getElementsByName('inptProduct')[0].childNodes
   let element = []
   for (let index = 0; index < developers.length; index++) {
-    element.push(developers[index].textContent)
-    debugger
+    element.push({ id: developers[index].value, name: developers[index].textContent })
   }
-
   let date = (document.forms[0][1].value).split(" - ")
   let startDate = date[0]
   let endDate = date[1]
@@ -240,7 +276,8 @@ $(function() {
   function(start, end, label) {
     projectStartDate = start.format('YYYY-MM-DD')
     projectEndDate = end.format('YYYY-MM-DD')
-    console.log("A new date selection was made: " + start.format('DD/MM/YYYY hh:mm A') + ' to ' + end.format('DD/MM/YYYY hh:mm A'));
+    console.log("A new date selection was made: " +
+     start.format('DD/MM/YYYY hh:mm A') + ' to ' + end.format('DD/MM/YYYY hh:mm A'));
   });
 });
 

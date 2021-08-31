@@ -69,7 +69,7 @@ input CreateProject {
   created: DateTime
   endDate: DateTime
   id: ID
-  projectDevelopers: [String!]
+  projectDevelopers: JSON
   projectLeaderId: Int
   projectName: String
   startDate: DateTime
@@ -478,7 +478,7 @@ type Project {
   created: DateTime
   endDate: DateTime
   id: ID!
-  projectDevelopers: [String!]
+  projectDevelopers: JSON
   projectLeader: Employee
   projectLeaderId: Int
   projectName: String
@@ -526,7 +526,7 @@ type ProjectDeleteResponse {
   created: DateTime
   endDate: DateTime
   id: ID
-  projectDevelopers: [String!]
+  projectDevelopers: JSON
   projectLeaderId: Int
   projectName: String
   startDate: DateTime
@@ -921,7 +921,7 @@ input UpdateProject {
   created: DateTime
   endDate: DateTime
   id: ID
-  projectDevelopers: [String!]
+  projectDevelopers: JSON
   projectLeaderId: Int
   projectName: String
   startDate: DateTime
